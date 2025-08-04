@@ -1,7 +1,7 @@
 # 导入模块
 import os
-import pyJianYingDraft as draft
-from pyJianYingDraft import IntroType, TransitionType, trange, tim
+import pycapcut as draft
+from pycapcut import IntroType, TransitionType, trange, tim
 
 # 设置草稿文件夹
 draft_folder = draft.DraftFolder(r"<你的草稿文件夹>")

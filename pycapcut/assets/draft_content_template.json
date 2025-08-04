@@ -1,5 +1,6 @@
 {
     "canvas_config": {
+        "background": null,
         "height": 1080,
         "ratio": "original",
         "width": 1920
@@ -28,6 +29,7 @@
         "subtitle_sync": true,
         "subtitle_taskinfo": [],
         "system_font_list": [],
+        "use_float_render": false,
         "video_mute": false,
         "zoom_info_params": null
     },
@@ -39,6 +41,7 @@
     "free_render_index_mode_on": false,
     "group_container": null,
     "id": "91E08AC5-22FB-47e2-9AA0-7DC300FAEA2B",
+    "is_drop_frame_timecode": false,
     "keyframe_graph_list": [],
     "keyframes": {
         "adjusts": [],
@@ -51,17 +54,12 @@
         "videos": []
     },
     "last_modified_platform": {
-        "app_id": 3704,
-        "app_source": "lv",
-        "app_version": "5.9.0",
+        "app_id": 359289,
+        "app_source": "cc",
+        "app_version": "6.7.0",
         "os": "windows"
     },
-    "platform": {
-        "app_id": 3704,
-        "app_source": "lv",
-        "app_version": "5.9.0",
-        "os": "windows"
-    },
+    "lyrics_effects": [],
     "materials": {
         "ai_translates": [],
         "audio_balances": [],
@@ -73,6 +71,8 @@
         "canvases": [],
         "chromas": [],
         "color_curves": [],
+        "common_mask": [],
+        "digital_human_model_dressing": [],
         "digital_humans": [],
         "drafts": [],
         "effects": [],
@@ -83,11 +83,12 @@
         "images": [],
         "log_color_wheels": [],
         "loudnesses": [],
+        "manual_beautys": [],
         "manual_deformations": [],
-        "masks": [],
         "material_animations": [],
         "material_colors": [],
         "multi_language_refs": [],
+        "placeholder_infos": [],
         "placeholders": [],
         "plugin_effects": [],
         "primary_color_wheels": [],
@@ -111,15 +112,21 @@
     },
     "mutable_config": null,
     "name": "",
-    "new_version": "110.0.0",
+    "new_version": "140.0.0",
+    "path": "",
+    "platform": {
+        "app_id": 359289,
+        "app_source": "cc",
+        "app_version": "6.7.0",
+        "os": "windows"
+    },
     "relationships": [],
     "render_index_track_mode_on": false,
     "retouch_cover": null,
     "source": "default",
     "static_cover_image_path": "",
     "time_marks": null,
-    "tracks": [
-    ],
+    "tracks": [],
     "update_time": 0,
     "version": 360000
 }
