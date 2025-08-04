@@ -1,0 +1,3 @@
+pymediainfo
+imageio
+uiautomation>=2
