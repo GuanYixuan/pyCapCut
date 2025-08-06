@@ -1,4 +1,7 @@
-"""记录各种特效/音效/滤镜等的元数据"""
+"""记录各种特效/音效/滤镜等的元数据
+
+所有可用特效的更新时间：25-08
+"""
 
 from .effect_meta import EffectMeta, EffectParamInstance
 from .effect_meta import AnimationMeta
@@ -14,8 +17,6 @@ from .video_group_animation import GroupAnimationType
 
 # 音频特效
 from .audio_scene_effect import AudioSceneEffectType
-from .tone_effect import ToneEffectType
-from .speech_to_song import SpeechToSongType
 
 # 文本动画
 from .text_intro import TextIntro
@@ -44,8 +45,6 @@ __all__ = [
     "TextOutro",
     "TextLoopAnim",
     "AudioSceneEffectType",
-    "ToneEffectType",
-    "SpeechToSongType",
     "VideoSceneEffectType",
     "VideoCharacterEffectType"
 ]
