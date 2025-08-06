@@ -15,7 +15,7 @@ from .local_materials import AudioMaterial
 from .keyframe import KeyframeProperty, KeyframeList
 
 from .metadata import EffectParamInstance
-from .metadata import AudioSceneEffectType, ToneEffectType, SpeechToSongType
+from .metadata import AudioSceneEffectType
 
 class AudioFade:
     """音频淡入淡出效果"""
@@ -60,7 +60,7 @@ class AudioEffect:
 
     audio_adjust_params: List[EffectParamInstance]
 
-    def __init__(self, effect_meta: Union[AudioSceneEffectType, ToneEffectType, SpeechToSongType],
+    def __init__(self, effect_meta: AudioSceneEffectType,
                  params: Optional[List[Optional[float]]] = None):
         """根据给定的音效元数据及参数列表构造一个音频特效对象, params的范围是0~100"""
 
@@ -73,14 +73,14 @@ class AudioEffect:
             self.category_id = "sound_effect"
             self.category_name = "场景音"
             self.category_index = 1
-        elif isinstance(effect_meta, ToneEffectType):
-            self.category_id = "tone"
-            self.category_name = "音色"
-            self.category_index = 2
-        elif isinstance(effect_meta, SpeechToSongType):
-            self.category_id = "speech_to_song"
-            self.category_name = "声音成曲"
-            self.category_index = 3
+        # elif isinstance(effect_meta, ToneEffectType):
+        #     self.category_id = "tone"
+        #     self.category_name = "音色"
+        #     self.category_index = 2
+        # elif isinstance(effect_meta, SpeechToSongType):
+        #     self.category_id = "speech_to_song"
+        #     self.category_name = "声音成曲"
+        #     self.category_index = 3
         else:
             raise TypeError("不支持的元数据类型 %s" % type(effect_meta))
 
@@ -155,12 +155,12 @@ class AudioSegment(MediaSegment):
         self.fade = None
         self.effects = []
 
-    def add_effect(self, effect_type: Union[AudioSceneEffectType, ToneEffectType, SpeechToSongType],
+    def add_effect(self, effect_type: AudioSceneEffectType,
                    params: Optional[List[Optional[float]]] = None) -> "AudioSegment":
         """为音频片段添加一个作用于整个片段的音频效果, 目前"声音成曲"效果不能自动被剪映所识别
 
         Args:
-            effect_type (`AudioSceneEffectType` | `ToneEffectType` | `SpeechToSongType`): 音效类型, 一类音效只能添加一个.
+            effect_type (`AudioSceneEffectType`): 音效类型, 一类音效只能添加一个.
             params (`List[Optional[float]]`, optional): 音效参数列表, 参数列表中未提供或为None的项使用默认值.
                 参数取值范围(0~100)与剪映中一致. 某个特效类型有何参数以及具体参数顺序以枚举类成员的annotation为准.
 
