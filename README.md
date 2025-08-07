@@ -1,5 +1,8 @@
 # pyCapCut
+
 ### 与[PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft)同源的轻量、灵活、易上手Python CapCut草稿生成及导出工具，构建全自动视频剪辑/混剪流水线！
+
+[English Version](english_readme.md)
 
 > 🧪 本项目正在从[PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft)进行迁移，欢迎⭐️此项目保持关注！
 
