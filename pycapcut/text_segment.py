@@ -62,8 +62,8 @@ class TextStyle:
             alpha (`float`, optional): 字体不透明度, 取值范围[0, 1], 默认不透明
             align (`int`, optional): 对齐方式, 0: 左对齐, 1: 居中, 2: 右对齐, 默认为左对齐
             vertical (`bool`, optional): 是否为竖排文本, 默认为否
-            letter_spacing (`int`, optional): 字符间距, 定义与剪映中一致, 默认为0
-            line_spacing (`int`, optional): 行间距, 定义与剪映中一致, 默认为0
+            letter_spacing (`int`, optional): 字符间距, 定义与CapCut中一致, 默认为0
+            line_spacing (`int`, optional): 行间距, 定义与CapCut中一致, 默认为0
             auto_wrapping (`bool`, optional): 是否自动换行, 默认关闭
             max_line_width (`float`, optional): 每行最大行宽占屏幕宽度比例, 取值范围为[0, 1], 默认为0.82
         """
@@ -99,7 +99,7 @@ class TextBorder:
         Args:
             alpha (`float`, optional): 描边不透明度, 取值范围[0, 1], 默认为1.0
             color (`Tuple[float, float, float]`, optional): 描边颜色, RGB三元组, 取值范围为[0, 1], 默认为黑色
-            width (`float`, optional): 描边宽度, 与剪映中一致, 取值范围为[0, 100], 默认为40.0
+            width (`float`, optional): 描边宽度, 与CapCut中一致, 取值范围为[0, 100], 默认为40.0
         """
         self.alpha = alpha
         self.color = color
@@ -144,13 +144,13 @@ class TextBackground:
         """
         Args:
             color (`str`): 背景颜色, 格式为'#RRGGBB'
-            style (`int`, optional): 背景样式, 1和2分别对应剪映中的两种样式, 默认为1
-            alpha (`float`, optional): 背景不透明度, 与剪映中一致, 取值范围[0, 1], 默认为1.0
-            round_radius (`float`, optional): 背景圆角半径, 与剪映中一致, 取值范围[0, 1], 默认为0.0
-            height (`float`, optional): 背景高度, 与剪映中一致, 取值范围为[0, 1], 默认为0.14
-            width (`float`, optional): 背景宽度, 与剪映中一致, 取值范围为[0, 1], 默认为0.14
-            horizontal_offset (`float`, optional): 背景水平偏移, 与剪映中一致, 取值范围为[0, 1], 默认为0.5
-            vertical_offset (`float`, optional): 背景竖直偏移, 与剪映中一致, 取值范围为[0, 1], 默认为0.5
+            style (`int`, optional): 背景样式, 1和2分别对应CapCut中的两种样式, 默认为1
+            alpha (`float`, optional): 背景不透明度, 与CapCut中一致, 取值范围[0, 1], 默认为1.0
+            round_radius (`float`, optional): 背景圆角半径, 与CapCut中一致, 取值范围[0, 1], 默认为0.0
+            height (`float`, optional): 背景高度, 与CapCut中一致, 取值范围为[0, 1], 默认为0.14
+            width (`float`, optional): 背景宽度, 与CapCut中一致, 取值范围为[0, 1], 默认为0.14
+            horizontal_offset (`float`, optional): 背景水平偏移, 与CapCut中一致, 取值范围为[0, 1], 默认为0.5
+            vertical_offset (`float`, optional): 背景竖直偏移, 与CapCut中一致, 取值范围为[0, 1], 默认为0.5
         """
         self.style = style
 

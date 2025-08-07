@@ -133,7 +133,7 @@ class ClipSettings:
             scale_y (float, optional): 垂直缩放比例. 默认为1.0.
             transform_x (float, optional): 水平位移, 单位为半个画布宽. 默认为0.0.
             transform_y (float, optional): 垂直位移, 单位为半个画布高. 默认为0.0.
-                参考: 剪映导入的字幕似乎取此值为-0.8
+                参考: CapCut导入的字幕似乎取此值为-0.8
         """
         self.alpha = alpha
         self.flip_horizontal, self.flip_vertical = flip_horizontal, flip_vertical

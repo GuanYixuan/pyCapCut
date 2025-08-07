@@ -18,7 +18,7 @@ class DraftFolder:
         """初始化草稿文件夹管理器
 
         Args:
-            folder_path (`str`): 包含若干草稿的文件夹, 一般取剪映保存草稿的位置即可
+            folder_path (`str`): 包含若干草稿的文件夹, 一般取CapCut保存草稿的位置即可
 
         Raises:
             `FileNotFoundError`: 路径不存在
@@ -38,7 +38,7 @@ class DraftFolder:
     def has_draft(self, draft_name: str) -> bool:
         """检查文件夹中是否存在指定名称的草稿
 
-        注意: 本函数只检查文件夹是否存在, 并不检查草稿是否符合剪映的格式
+        注意: 本函数只检查文件夹是否存在, 并不检查草稿是否符合CapCut的格式
 
         Args:
             draft_name (`str`): 草稿名称, 即相应文件夹名称

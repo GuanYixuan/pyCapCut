@@ -147,7 +147,7 @@ class ScriptMaterial:
         }
 
 class ScriptFile:
-    """剪映草稿文件, 大部分接口定义在此"""
+    """CapCut草稿文件, 大部分接口定义在此"""
 
     save_path: Optional[str]
     """草稿文件保存路径, 仅在模板模式下有效"""
@@ -174,7 +174,7 @@ class ScriptFile:
     """导入的轨道信息"""
 
     def __init__(self, width: int, height: int, fps: int = 30):
-        """**创建剪映草稿推荐使用`DraftFolder.create_draft()`而非此方法**
+        """**创建CapCut草稿推荐使用`DraftFolder.create_draft()`而非此方法**
 
         Args:
             width (int): 视频宽度, 单位为像素
@@ -239,7 +239,7 @@ class ScriptFile:
                   relative_index: int = 0, absolute_index: Optional[int] = None) -> "ScriptFile":
         """向草稿文件中添加一个指定类型、指定名称的轨道, 可以自定义轨道层级
 
-        注意: 主视频轨道(最底层的视频轨道)上的视频片段必须从0s开始, 否则会被剪映强制对齐至0s.
+        注意: 主视频轨道(最底层的视频轨道)上的视频片段必须从0s开始, 否则会被CapCut强制对齐至0s.
 
         为避免混淆, 仅在创建第一个同类型轨道时允许不指定名称
 
@@ -365,7 +365,7 @@ class ScriptFile:
             t_range (`Timerange`): 特效片段的时间范围
             track_name (`str`, optional): 添加到的轨道名称. 当特效轨道仅有一条时可省略.
             params (`List[Optional[float]]`, optional): 特效参数列表, 参数列表中未提供或为None的项使用默认值.
-                参数取值范围(0~100)与剪映中一致. 某个特效类型有何参数以及具体参数顺序以枚举类成员的annotation为准.
+                参数取值范围(0~100)与CapCut中一致. 某个特效类型有何参数以及具体参数顺序以枚举类成员的annotation为准.
 
         Raises:
             `NameError`: 未找到指定名称的轨道, 或必须提供`track_name`参数时未提供
@@ -424,8 +424,8 @@ class ScriptFile:
             track_name (`str`): 导入到的文本轨道名称, 若不存在则自动创建
             style_reference (`TextSegment`, optional): 作为样式参考的文本片段, 若提供则使用其样式.
             time_offset (`Union[str, float]`, optional): 字幕整体时间偏移, 单位为微秒, 默认为0.
-            text_style (`TextStyle`, optional): 字幕样式, 默认模仿剪映导入字幕时的样式, 会被`style_reference`覆盖.
-            clip_settings (`ClipSettings`, optional): 图像调节设置, 默认模仿剪映导入字幕时的设置, 会覆盖`style_reference`的设置除非指定为`None`.
+            text_style (`TextStyle`, optional): 字幕样式, 默认模仿CapCut导入字幕时的样式, 会被`style_reference`覆盖.
+            clip_settings (`ClipSettings`, optional): 图像调节设置, 默认模仿CapCut导入字幕时的设置, 会覆盖`style_reference`的设置除非指定为`None`.
 
         Raises:
             `NameError`: 已存在同名轨道

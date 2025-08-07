@@ -17,11 +17,11 @@ class Animation:
     name: str
     """动画名称, 默认取为动画效果的名称"""
     effect_id: str
-    """另一种动画id, 由剪映本身提供"""
+    """另一种动画id, 由CapCut本身提供"""
     animation_type: str
     """动画类型, 在子类中定义"""
     resource_id: str
-    """资源id, 由剪映本身提供"""
+    """资源id, 由CapCut本身提供"""
 
     start: int
     """动画相对此片段开头的偏移, 单位为微秒"""

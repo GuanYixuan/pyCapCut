@@ -52,7 +52,7 @@ class AudioEffect:
     effect_id: str
     """特效全局id, 由程序自动生成"""
     resource_id: str
-    """资源id, 由剪映本身提供"""
+    """资源id, 由CapCut本身提供"""
 
     category_id: Literal["sound_effect", "tone", "speech_to_song"]
     category_name: Literal["场景音", "音色", "声音成曲"]
@@ -157,12 +157,12 @@ class AudioSegment(MediaSegment):
 
     def add_effect(self, effect_type: AudioSceneEffectType,
                    params: Optional[List[Optional[float]]] = None) -> "AudioSegment":
-        """为音频片段添加一个作用于整个片段的音频效果, 目前"声音成曲"效果不能自动被剪映所识别
+        """为音频片段添加一个作用于整个片段的音频效果
 
         Args:
             effect_type (`AudioSceneEffectType`): 音效类型, 一类音效只能添加一个.
             params (`List[Optional[float]]`, optional): 音效参数列表, 参数列表中未提供或为None的项使用默认值.
-                参数取值范围(0~100)与剪映中一致. 某个特效类型有何参数以及具体参数顺序以枚举类成员的annotation为准.
+                参数取值范围(0~100)与CapCut中一致. 某个特效类型有何参数以及具体参数顺序以枚举类成员的annotation为准.
 
         Raises:
             `ValueError`: 试图添加一个已经存在的音效类型、提供的参数数量超过了该音效类型的参数数量, 或参数值超出范围.

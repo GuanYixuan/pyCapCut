@@ -88,9 +88,9 @@ class VideoEffect:
     global_id: str
     """特效全局id, 由程序自动生成"""
     effect_id: str
-    """某种特效id, 由剪映本身提供"""
+    """某种特效id, 由CapCut本身提供"""
     resource_id: str
-    """资源id, 由剪映本身提供"""
+    """资源id, 由CapCut本身提供"""
 
     effect_type: Literal["video_effect", "face_effect"]
     apply_target_type: Literal[0, 2]
@@ -209,9 +209,9 @@ class Transition:
     global_id: str
     """转场全局id, 由程序自动生成"""
     effect_id: str
-    """转场效果id, 由剪映本身提供"""
+    """转场效果id, 由CapCut本身提供"""
     resource_id: str
-    """资源id, 由剪映本身提供"""
+    """资源id, 由CapCut本身提供"""
 
     duration: int
     """转场持续时间, 单位为微秒"""
@@ -382,7 +382,7 @@ class VideoSegment(VisualSegment):
         Args:
             effect_type (`VideoSceneEffectType` or `VideoCharacterEffectType`): 特效类型
             params (`List[Optional[float]]`, optional): 特效参数列表, 参数列表中未提供或为None的项使用默认值.
-                参数取值范围(0~100)与剪映中一致. 某个特效类型有何参数以及具体参数顺序以枚举类成员的annotation为准.
+                参数取值范围(0~100)与CapCut中一致. 某个特效类型有何参数以及具体参数顺序以枚举类成员的annotation为准.
 
         Raises:
             `ValueError`: 提供的参数数量超过了该特效类型的参数数量, 或参数值超出范围.
@@ -470,7 +470,7 @@ class VideoSegment(VisualSegment):
 
         Args:
             fill_type (`blur` or `color`): 填充类型, `blur`表示模糊, `color`表示颜色.
-            blur (`float`, optional): 模糊程度, 0.0-1.0. 仅在`fill_type`为`blur`时有效. 剪映中的四档模糊数值分别为0.0625, 0.375, 0.75和1.0, 默认为0.0625.
+            blur (`float`, optional): 模糊程度, 0.0-1.0. 仅在`fill_type`为`blur`时有效. CapCut中的四档模糊数值分别为0.0625, 0.375, 0.75和1.0, 默认为0.0625.
             color (`str`, optional): 填充颜色, 格式为'#RRGGBBAA'. 仅在`fill_type`为`color`时有效.
 
         Raises:
