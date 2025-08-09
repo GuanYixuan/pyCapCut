@@ -65,7 +65,7 @@
 - ☑️ [Import `.srt` files](#import-subtitles) to create subtitles in bulk and style them
 
 # Quick Start
-The `demo.py` example creates a CapCut draft with audio/video media and a line of text, and adds audio fade-in, a video intro animation, a transition, and a text bubble/fancy effect.
+The `demo.py` example creates a CapCut draft with audio/video media and a line of text, and adds audio fade-in, a video intro animation, a transition, keyframes, and a text bubble effect.
 
 How to run the example:
 1. Find your CapCut Drafts folder path (like `.../CapCut Drafts`) and replace `<your CapCut Drafts folder>` in the code
@@ -105,7 +105,7 @@ script = draft_folder.duplicate_as_template("Template Draft", "New Draft")  # Co
 
 # Edit the returned ScriptFile object, e.g., replace media, add tracks and segments
 
-script.save()  # Save your "新草稿"
+script.save()  # Save your "New Draft"
 ```
 
 To maximize compatibility with complex features in templates, the imported tracks are kept separate from the tracks created by pycapcut:
@@ -217,7 +217,7 @@ This literally copies the specified tracks in the template draft into the new dr
 Example:
 ```python
 source_script = draft_folder.load_template("<Template Draft Name>")     # Load the template draft
-target_script = draft_folder.create_draft("新草稿", 1920, 1080)  # Create a new draft
+target_script = draft_folder.create_draft("New Draft", 1920, 1080)  # Create a new draft
 
 # Select a text track from the template
 text_track = source_script.get_imported_track(
