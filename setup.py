@@ -1,14 +1,14 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name="pycapcut",
-    version="0.0.1",
+    version="0.0.2",
     author="gary318",
     description="轻量、灵活、易上手的Python CapCut草稿生成及导出工具，构建全自动化视频剪辑/混剪流水线",
     long_description=open("pypi_readme.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/GuanYixuan/pycapcut",
-    packages=find_packages(),
+    packages=["pycapcut"],
     package_data={
         'pycapcut.assets': ['*.json']
     },
