@@ -64,6 +64,18 @@
 - ☑️ [Automatic line wrapping](#automatic-line-wrapping) with configurable max line width
 - ☑️ [Import `.srt` files](#import-subtitles) to create subtitles in bulk and style them
 
+## Installation
+
+pyCapCut now supports pip installation (excluding demo).
+
+```bash
+pip install pycapcut
+```
+
+### Cross-platform Compatibility
+
+Linux and MacOS users can also install and use normally, but note that **generated drafts still need to be exported in Windows version CapCut**.
+
 # Quick Start
 The `demo.py` example creates a CapCut draft with audio/video media and a line of text, and adds audio fade-in, a video intro animation, a transition, keyframes, and a text bubble effect.
 
