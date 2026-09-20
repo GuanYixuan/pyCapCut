@@ -330,6 +330,7 @@ video_seg.add_filter(FilterType.冰城, 50)  # 강도 50
 ├── requirements.txt     ← 의존성 목록
 ├── README.md            ← 원본 문서 (중국어)
 ├── english_readme.md    ← 원본 문서 (영어)
+├── korean_readme.md     ← README.md 한국어 번역본
 ├── readme_assets/       ← 문서용 이미지/튜토리얼 소재
 └── pycapcut/            ← 핵심 패키지
     ├── __init__.py
