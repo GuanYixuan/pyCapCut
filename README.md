@@ -267,6 +267,7 @@ assert cc.Timerange(0, 60*SEC) == trange("0s", "1m") == trange("0s", "0.5m30s")
 # 片段开始后2秒
 seg: cc.VideoSegment
 assert seg.target_timerange.start + 2*SEC == seg.target_timerange.start + tim("2s")
+
 ```
 
 #### 素材截取与整体变速
@@ -320,6 +321,15 @@ seg3  = cc.VideoSegment(video_path, trange("1s", "66666h"),
 script.add_segment(seg11, "1").add_segment(seg12, "1")
 script.add_segment(seg2, "2")
 script.add_segment(seg3, "3")
+```
+
+#### 主轨磁吸
+
+创建草稿时可以通过 `maintrack_adsorb` 设置主轨磁吸；默认启用。
+
+```python
+script = draft_folder.create_draft("新草稿", 1920, 1080, maintrack_adsorb=False)
+script.save()
 ```
 
 #### 多轨道操作
