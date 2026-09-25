@@ -1,7 +1,8 @@
 """定义时间范围类以及与时间相关的辅助函数"""
 
-from typing import Union
-from typing import Dict
+import math
+
+from typing import Dict, Optional, Union
 
 SEC = 1000000
 """一秒=1e6微秒"""
@@ -87,6 +88,60 @@ def trange(start: Union[str, float], duration: Union[str, float]) -> Timerange:
         duration (Union[str, float]): 持续长度, 注意**不是结束时间**
     """
     return Timerange(tim(start), tim(duration))
+
+
+def trange_seconds(start: Union[int, float], *,
+                   end: Optional[Union[int, float]] = None,
+                   duration: Optional[Union[int, float]] = None) -> Timerange:
+    """用秒数起点及终点或时长构造时间范围，并分别将边界取整到微秒。
+
+    Args:
+        start (int or float): 起点，单位为秒，可为负数。
+        end (int or float, optional): 终点，单位为秒，与 duration 只能提供一个。
+        duration (int or float, optional): 时长，单位为秒，与 end 只能提供一个。
+
+    Raises:
+        TypeError: 参数不是数值，或使用了布尔值。
+        ValueError: end 与 duration 未恰好提供一个、数值非有限或时间范围为负。
+    """
+    if (end is None) == (duration is None):
+        raise ValueError("必须且只能提供 end 或 duration 其中一个参数")
+
+    for name, value in (("start", start), ("end", end), ("duration", duration)):
+        if value is None:
+            continue
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            raise TypeError(f"{name} 必须是以秒为单位的数值")
+        try:
+            finite = math.isfinite(value)
+        except OverflowError:
+            finite = False
+        if not finite:
+            raise ValueError(f"{name} 必须是有限数值: {value}")
+
+    if duration is not None:
+        if duration < 0:
+            raise ValueError(f"duration 不能为负数: {duration}")
+        end_seconds = start + duration
+    else:
+        end_seconds = end
+
+    assert end_seconds is not None
+    try:
+        finite_end = math.isfinite(end_seconds)
+    except OverflowError:
+        finite_end = False
+    if not finite_end:
+        raise ValueError("计算出的结束时间不是有限数值")
+    if end_seconds < start:
+        raise ValueError(f"end 不能早于 start: start={start}, end={end_seconds}")
+
+    try:
+        start_us = round(start * SEC)
+        end_us = round(end_seconds * SEC)
+    except OverflowError as exc:
+        raise ValueError("秒数超出可表示的微秒范围") from exc
+    return Timerange(start_us, end_us - start_us)
 
 def srt_tstamp(srt_tstamp: str) -> int:
     """解析srt中的时间戳字符串, 返回微秒数"""

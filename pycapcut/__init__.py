@@ -27,7 +27,7 @@ ISWIN = (sys.platform == 'win32')
 if ISWIN:
     pass
 
-from .time_util import SEC, tim, trange
+from .time_util import SEC, tim, trange, trange_seconds
 
 # 基础__all__列表（所有平台通用）
 __all__ = [
@@ -68,4 +68,5 @@ __all__ = [
     "SEC",
     "tim",
     "trange",
+    "trange_seconds",
 ]

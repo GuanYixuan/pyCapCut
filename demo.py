@@ -1,7 +1,7 @@
 # 导入模块
 import os
 import pycapcut as cc
-from pycapcut import trange, tim
+from pycapcut import trange, trange_seconds, tim
 
 # 设置草稿文件夹
 draft_folder = cc.DraftFolder(r"<你的草稿文件夹>")
@@ -17,19 +17,20 @@ script.add_track(cc.TrackType.audio).add_track(cc.TrackType.video).add_track(cc.
 
 # 创建音频片段（使用便捷构造，直接传入素材路径）
 audio_segment = cc.AudioSegment(os.path.join(tutorial_asset_dir, 'audio.mp3'),
-                                   trange("0s", "5s"),  # 片段将位于轨道上的0s-5s（注意5s表示持续时长而非结束时间）
+                                   trange_seconds(0, duration=5),  # 片段将位于轨道上的0s-5s
                                    volume=0.6)          # 音量设置为60%(-4.4dB)
 audio_segment.add_fade("1s", "0s")                      # 增加一个1s的淡入
 
 # 创建视频片段（使用便捷构造，直接传入素材路径）
 video_segment = cc.VideoSegment(os.path.join(tutorial_asset_dir, 'video.mp4'),
-                                   trange("0s", "4.2s"))                    # 片段将位于轨道上的0s-4.2s（取素材前4.2s内容，注意此处4.2s表示持续时长）
+                                   trange_seconds(0, duration=4.2))  # 片段位于0s-4.2s，截取素材前4.2s内容
 video_segment.add_animation(cc.IntroType.噪点拽入)                           # 添加一个入场动画"噪点拽入"
 video_segment.add_keyframe(cc.KeyframeProperty.position_x, tim(0), -2)      # 设置初始位置恰好在屏幕左侧外面
 video_segment.add_keyframe(cc.KeyframeProperty.position_x, tim("0.5s"), 0)  # 设置0.5s后回到屏幕中央
 
 # 创建贴纸片段，由于需要读取素材长度，先创建素材实例
 gif_material = cc.VideoMaterial(os.path.join(tutorial_asset_dir, 'sticker.gif'))
+# video_segment.end 和 gif_material.duration 均为内部微秒值，直接使用 trange
 gif_segment = cc.VideoSegment(gif_material,
                                  trange(video_segment.end, gif_material.duration))  # 紧跟上一片段，长度与gif一致
 gif_segment.add_background_filling("blur", 0.0625)  # 添加一个模糊背景填充效果, 模糊程度等同于CapCut中第一档
