@@ -2,7 +2,7 @@
 
 ### A lightweight, flexible, and easy-to-use Python tool for generating and exporting CapCut drafts to build fully automated video editing/remix pipelines!
 
-[中文版本](README.md)
+[中文版本](README.md) | [한국어 버전](korean_readme.md)
 
 > 🧪 This project is being migrated from [PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft). Please ⭐️ to stay tuned!
 
