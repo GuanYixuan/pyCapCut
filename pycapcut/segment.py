@@ -187,16 +187,20 @@ class MediaSegment(BaseSegment):
     """播放速度设置"""
     volume: float
     """音量"""
+    change_pitch: Optional[bool]
+    """是否随变速改变音调；None 表示不导出该字段"""
 
     extra_material_refs: List[str]
     """附加的素材id列表, 用于链接动画/特效等"""
 
-    def __init__(self, material_id: str, source_timerange: Optional[Timerange], target_timerange: Timerange, speed: float, volume: float):
+    def __init__(self, material_id: str, source_timerange: Optional[Timerange], target_timerange: Timerange,
+                 speed: float, volume: float, *, change_pitch: Optional[bool] = None):
         super().__init__(material_id, target_timerange)
 
         self.source_timerange = source_timerange
         self.speed = Speed(speed)
         self.volume = volume
+        self.change_pitch = change_pitch
 
         self.extra_material_refs = [self.speed.global_id]
 
@@ -209,6 +213,8 @@ class MediaSegment(BaseSegment):
             "volume": self.volume,
             "extra_material_refs": self.extra_material_refs,
         })
+        if self.change_pitch is not None:
+            ret["is_tone_modify"] = self.change_pitch
         return ret
 
 class VisualSegment(MediaSegment):
@@ -227,7 +233,8 @@ class VisualSegment(MediaSegment):
     """
 
     def __init__(self, material_id: str, source_timerange: Optional[Timerange], target_timerange: Timerange,
-                 speed: float, volume: float, *, clip_settings: Optional[ClipSettings]):
+                 speed: float, volume: float, *, clip_settings: Optional[ClipSettings],
+                 change_pitch: Optional[bool] = None):
         """初始化视觉片段基类
 
         Args:
@@ -237,8 +244,10 @@ class VisualSegment(MediaSegment):
             speed (`float`): 播放速度
             volume (`float`): 音量
             clip_settings (`ClipSettings`, optional): 图像调节设置, 默认不作任何变换
+            change_pitch (`bool`, optional): 是否随变速改变音调；非媒体片段不导出此字段
         """
-        super().__init__(material_id, source_timerange, target_timerange, speed, volume)
+        super().__init__(material_id, source_timerange, target_timerange, speed, volume,
+                         change_pitch=change_pitch)
 
         self.clip_settings = clip_settings if clip_settings is not None else ClipSettings()
         self.uniform_scale = True

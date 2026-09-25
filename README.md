@@ -33,6 +33,7 @@
 > 🧪 本模块刚刚完成迁移，若有特效/动画/转场等不生效的情况欢迎提出issue
 
 - ☑️ 添加本地视频/图片素材，并[自定义片段的时间、持续时长或播放速度](#素材截取与整体变速)
+- ☑️ 带音轨视频可在变速时[改变音调](#变速时改变音调)
 - ☑️ 视频片段的音频淡入淡出效果
 - ☑️ [视频整体调节](#视频整体调节)（旋转、缩放、亮度等）以及[关键帧生成](#关键帧)
 - ☑️ 视频片段的[入场/出场/组合动画](#添加片段动画)
@@ -43,6 +44,7 @@
 - ☑️ 贴纸的[关键帧](#关键帧)生成
 ### 音频
 - ☑️ 添加本地音频素材，并[自定义片段的时间、持续时长或播放速度](#素材截取与整体变速)
+- ☑️ 音频片段可在变速时[改变音调](#变速时改变音调)
 - ☑️ 调整淡入淡出时长[(示例代码)](demo.py)，调整音量[(示例代码)](demo.py)及其[关键帧](#关键帧)
 - ☑️ 添加音频片段的[场景音效果](#添加片段特效)，并设置参数
 ### 轨道
@@ -330,6 +332,16 @@ seg3  = cc.VideoSegment(video_path, trange("1s", "66666h"),
 script.add_segment(seg11, "1").add_segment(seg12, "1")
 script.add_segment(seg2, "2")
 script.add_segment(seg3, "3")
+```
+
+#### 变速时改变音调
+
+`AudioSegment` 和带音轨的 `VideoSegment` 均可设置 `change_pitch=True`，使音调随播放速度改变；默认值为 `False`，保持变速时的原音调。无音轨的视频不会产生可听变化。
+
+```python
+audio_path = os.path.join(tutorial_asset_dir, 'audio.mp3')
+audio_segment = cc.AudioSegment(audio_path, trange_seconds(0, duration=2),
+                                speed=2.0, change_pitch=True)
 ```
 
 #### 主轨磁吸

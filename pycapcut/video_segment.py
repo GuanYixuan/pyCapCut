@@ -312,7 +312,7 @@ class VideoSegment(VisualSegment):
 
     def __init__(self, material: Union[VideoMaterial, str], target_timerange: Timerange, *,
                  source_timerange: Optional[Timerange] = None, speed: Optional[float] = None, volume: float = 1.0,
-                 clip_settings: Optional[ClipSettings] = None):
+                 change_pitch: bool = False, clip_settings: Optional[ClipSettings] = None):
         """利用给定的视频/图片素材构建一个轨道片段, 并指定其时间信息及图像调节设置
 
         Args:
@@ -321,6 +321,7 @@ class VideoSegment(VisualSegment):
             source_timerange (`Timerange`, optional): 截取的素材片段的时间范围, 默认从开头根据`speed`截取与`target_timerange`等长的一部分
             speed (`float`, optional): 播放速度, 默认为1.0. 此项与`source_timerange`同时指定时, 将覆盖`target_timerange`中的时长
             volume (`float`, optional): 音量, 默认为1.0
+            change_pitch (`bool`, optional): 是否跟随变速改变音调, 默认为否
             clip_settings (`ClipSettings`, optional): 图像调节设置, 默认不作任何变换
 
         Raises:
@@ -340,7 +341,8 @@ class VideoSegment(VisualSegment):
         if source_timerange.end > material.duration:
             raise ValueError(f"截取的素材时间范围 {source_timerange} 超出了素材时长({material.duration})")
 
-        super().__init__(material.material_id, source_timerange, target_timerange, speed, volume, clip_settings=clip_settings)
+        super().__init__(material.material_id, source_timerange, target_timerange, speed, volume,
+                         clip_settings=clip_settings, change_pitch=change_pitch)
 
         self.material_instance = deepcopy(material)
         self.material_size = (material.width, material.height)
