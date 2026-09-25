@@ -5,6 +5,41 @@ import pymediainfo
 from typing import Optional, Literal
 from typing import Dict, Any
 
+
+def _coerce_numeric(value: object, *, field_name: str) -> float:
+    """将 MediaInfo 返回的数值字段统一转换为浮点数。"""
+    if value is None:
+        raise ValueError(f"媒体字段 '{field_name}' 为空")
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        stripped = value.strip()
+        if not stripped:
+            raise ValueError(f"媒体字段 '{field_name}' 为空字符串")
+        return float(stripped)
+    raise TypeError(f"媒体字段 '{field_name}' 的类型不受支持: {type(value)}")
+
+
+def _coerce_int(value: object, *, field_name: str) -> int:
+    """读取 MediaInfo 的整数尺寸字段。"""
+    return int(round(_coerce_numeric(value, field_name=field_name)))
+
+
+def _pick_first_numeric(*candidates: object, field_name: str) -> float:
+    """选择媒体轨道或容器中第一个可用的数值。"""
+    last_error: Optional[Exception] = None
+    for candidate in candidates:
+        if candidate is None:
+            continue
+        try:
+            return _coerce_numeric(candidate, field_name=field_name)
+        except (TypeError, ValueError) as exc:
+            last_error = exc
+    if last_error is not None:
+        raise last_error
+    raise ValueError(f"媒体字段 '{field_name}' 不存在")
+
+
 class CropSettings:
     """素材的裁剪设置, 各属性均在0-1之间, 注意素材的坐标原点在左上角"""
 
@@ -95,9 +130,16 @@ class VideoMaterial:
             pymediainfo.MediaInfo.parse(path, mediainfo_options={"File_TestContinuousFileNames": "0"})  # type: ignore
         # 有视频轨道的视为视频素材
         if len(info.video_tracks):
+            video_track = info.video_tracks[0]
+            general_track = info.general_tracks[0] if len(info.general_tracks) else None
             self.material_type = "video"
-            self.duration = int(info.video_tracks[0].duration * 1e3)  # type: ignore
-            self.width, self.height = info.video_tracks[0].width, info.video_tracks[0].height  # type: ignore
+            self.duration = int(round(_pick_first_numeric(
+                getattr(video_track, "duration", None),
+                getattr(general_track, "duration", None) if general_track is not None else None,
+                field_name="video duration"
+            ) * 1e3))
+            self.width = _coerce_int(getattr(video_track, "width", None), field_name="video width")
+            self.height = _coerce_int(getattr(video_track, "height", None), field_name="video height")
         # gif文件使用imageio库获取长度
         elif postfix.lower() == ".gif":
             import imageio
@@ -105,12 +147,14 @@ class VideoMaterial:
 
             self.material_type = "video"
             self.duration = int(round(gif.get_meta_data()['duration'] * gif.get_length() * 1e3))
-            self.width, self.height = info.image_tracks[0].width, info.image_tracks[0].height  # type: ignore
+            self.width = _coerce_int(getattr(info.image_tracks[0], "width", None), field_name="gif width")
+            self.height = _coerce_int(getattr(info.image_tracks[0], "height", None), field_name="gif height")
             gif.close()
         elif len(info.image_tracks):
             self.material_type = "photo"
             self.duration = 10800000000  # 相当于3h
-            self.width, self.height = info.image_tracks[0].width, info.image_tracks[0].height  # type: ignore
+            self.width = _coerce_int(getattr(info.image_tracks[0], "width", None), field_name="image width")
+            self.height = _coerce_int(getattr(info.image_tracks[0], "height", None), field_name="image height")
         else:
             raise ValueError(f"输入的素材文件 {path} 没有视频轨道或图片轨道")
 
@@ -175,7 +219,13 @@ class AudioMaterial:
             raise ValueError("音频素材不应包含视频轨道")
         if not len(info.audio_tracks):
             raise ValueError(f"给定的素材文件 {path} 没有音频轨道")
-        self.duration = int(info.audio_tracks[0].duration * 1e3)  # type: ignore
+        audio_track = info.audio_tracks[0]
+        general_track = info.general_tracks[0] if len(info.general_tracks) else None
+        self.duration = int(round(_pick_first_numeric(
+            getattr(audio_track, "duration", None),
+            getattr(general_track, "duration", None) if general_track is not None else None,
+            field_name="audio duration"
+        ) * 1e3))
 
     def export_json(self) -> Dict[str, Any]:
         return {
