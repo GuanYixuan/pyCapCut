@@ -1,6 +1,7 @@
 import os
 import json
 import math
+import uuid
 from copy import deepcopy
 
 from typing import Optional, Literal, Union, overload
@@ -816,3 +817,59 @@ class ScriptFile:
         if self.save_path is None:
             raise ValueError("没有设置保存路径, 可能不在模板模式下")
         self.dump(self.save_path)
+        self._register_meta_materials()
+
+    @staticmethod
+    def _meta_material_entry(path: str, name: str, duration: int,
+                             width: int, height: int, metetype: str) -> Dict[str, Any]:
+        """构造draft_meta_info.json中draft_materials的单条素材记录
+
+        CapCut依据file_Path匹配素材, 故其余字段沿用CapCut手动导入时的默认值即可."""
+        return {
+            "ai_group_type": "", "create_time": -1,
+            "duration": int(duration) if duration and duration > 0 else 5000000,
+            "enter_from": 0, "extra_info": name, "file_Path": path,
+            "height": int(height or 0), "id": uuid.uuid4().hex,
+            "import_time": -1, "import_time_ms": -1, "item_source": 1,
+            "material_color_tag": "", "md5": "", "metetype": metetype,
+            "roughcut_time_range": {"duration": -1, "start": -1},
+            "sub_time_range": {"duration": -1, "start": -1},
+            "type": 0, "width": int(width or 0),
+        }
+
+    def _register_meta_materials(self) -> None:
+        """将时间线中的本地视频/音频素材登记到draft_meta_info.json的draft_materials(type=0)中
+
+        本库仅写入draft_content.json, 而CapCut(实测国际版9.1.0/macOS)还依据draft_meta_info.json的
+        draft_materials来判断素材是否已导入; 该清单为空时会把明明存在的素材显示为"文件无法访问"并要求
+        重新链接. 故保存后据self.materials补全该清单."""
+        if self.save_path is None:
+            return
+        meta_path = os.path.join(os.path.dirname(self.save_path), "draft_meta_info.json")
+        if not os.path.exists(meta_path):
+            return
+
+        entries: List[Dict[str, Any]] = []
+        for video in self.materials.videos:
+            is_photo = video.material_type == "photo"
+            entries.append(self._meta_material_entry(
+                video.path, video.material_name,
+                0 if is_photo else video.duration,
+                video.width, video.height,
+                "photo" if is_photo else "video"))
+        for audio in self.materials.audios:
+            entries.append(self._meta_material_entry(
+                audio.path, audio.material_name, audio.duration, 0, 0, "music"))
+        if not entries:
+            return
+
+        with open(meta_path, "r", encoding="utf-8") as f:
+            meta = json.load(f)
+        groups = meta.setdefault("draft_materials", [])
+        group0 = next((g for g in groups if isinstance(g, dict) and g.get("type") == 0), None)
+        if group0 is None:
+            group0 = {"type": 0, "value": []}
+            groups.insert(0, group0)
+        group0["value"] = entries
+        with open(meta_path, "w", encoding="utf-8") as f:
+            json.dump(meta, f, ensure_ascii=False, indent=4)
