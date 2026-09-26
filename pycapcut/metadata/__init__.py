@@ -27,6 +27,7 @@ from .text_loop import TextLoopAnim
 from .font_meta import FontType
 from .mask_meta import MaskType, MaskMeta
 from .filter_meta import FilterType
+from .mix_mode_meta import MixModeType
 from .transition_meta import TransitionType
 
 __all__ = [
@@ -36,6 +37,7 @@ __all__ = [
     "MaskType",
     "MaskMeta",
     "FilterType",
+    "MixModeType",
     "FontType",
     "TransitionType",
     "IntroType",

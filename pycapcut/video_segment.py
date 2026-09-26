@@ -15,7 +15,7 @@ from .local_materials import VideoMaterial
 from .animation import SegmentAnimations, VideoAnimation
 
 from .metadata import EffectMeta, EffectParamInstance
-from .metadata import MaskMeta, MaskType, FilterType, TransitionType
+from .metadata import MaskMeta, MaskType, FilterType, MixModeType, TransitionType
 from .metadata import IntroType, OutroType, GroupAnimationType
 from .metadata import VideoSceneEffectType, VideoCharacterEffectType
 
@@ -201,6 +201,35 @@ class Filter:
             # 不导出path和request_id
         }
 
+class MixMode:
+    """作用于单个视频片段的混合模式素材。"""
+
+    global_id: str
+    """混合模式素材 ID"""
+    effect_meta: EffectMeta
+    """混合模式元数据"""
+
+    def __init__(self, meta: EffectMeta):
+        self.global_id = uuid.uuid4().hex
+        self.effect_meta = meta
+
+    def export_json(self) -> Dict[str, Any]:
+        return {
+            "type": "mix_mode",
+            "name": self.effect_meta.name,
+            "effect_id": self.effect_meta.effect_id,
+            "resource_id": self.effect_meta.resource_id,
+            "value": 1.0,
+            "apply_target_type": 0,
+            "platform": "all",
+            "source_platform": 0,
+            "category_id": "",
+            "category_name": "",
+            "sub_type": "none",
+            "time_range": None,
+            "id": self.global_id,
+        }
+
 class Transition:
     """转场对象"""
 
@@ -294,6 +323,8 @@ class VideoSegment(VisualSegment):
 
     在放入轨道时自动添加到素材列表中
     """
+    mix_mode: Optional[MixMode]
+    """混合模式, 可能为空, 在放入轨道时添加到素材列表中"""
     mask: Optional[Mask]
     """蒙版实例, 可能为空
 
@@ -348,6 +379,7 @@ class VideoSegment(VisualSegment):
         self.material_size = (material.width, material.height)
         self.effects = []
         self.filters = []
+        self.mix_mode = None
         self.transition = None
         self.mask = None
         self.background_filling = None
@@ -437,6 +469,22 @@ class VideoSegment(VisualSegment):
         self.filters.append(filter_inst)
         self.extra_material_refs.append(filter_inst.global_id)
 
+        return self
+
+    def set_mix_mode(self, mode: MixModeType) -> "VideoSegment":
+        """设置视频片段的混合模式，再次调用只保留最后一次设置。
+
+        Args:
+            mode (`MixModeType`): 混合模式类型
+        """
+        if not isinstance(mode, MixModeType):
+            raise TypeError("混合模式须为 MixModeType 成员")
+        if self.mix_mode is None:
+            self.mix_mode = MixMode(mode.value)
+            self.extra_material_refs.append(self.mix_mode.global_id)
+        else:
+            # 保留素材 ID，避免已加入草稿的片段产生第二条引用
+            self.mix_mode.effect_meta = mode.value
         return self
 
     def add_mask(self, mask_type: MaskType, *, center_x: float = 0.0, center_y: float = 0.0, size: float = 0.5,

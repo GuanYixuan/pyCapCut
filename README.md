@@ -38,6 +38,7 @@
 - ☑️ [视频整体调节](#视频整体调节)（旋转、缩放、亮度等）以及[关键帧生成](#关键帧)
 - ☑️ 视频片段的[入场/出场/组合动画](#添加片段动画)
 - ☑️ 添加[蒙版](#蒙版)、[片段特效](#添加片段特效)和[滤镜](#添加片段滤镜)
+- ☑️ 为叠放的视频片段设置[混合模式](#设置片段混合模式)
 - ☑️ 视频背景填充[(示例代码)](demo.py)
 ### 贴纸
 - ☑️ 根据元信息[添加贴纸](#提取素材元数据)
@@ -487,6 +488,25 @@ from pyJianYingDraft import FilterType
 video_segment1.add_filter(FilterType.原生肤, 10)  # 设置"原生肤"强度为10
 video_segment2.add_filter(FilterType.冰雪世界, 50)  # 设置"冰雪世界"强度为50
 ```
+
+#### 设置片段混合模式
+
+`VideoSegment.set_mix_mode()`用于设置叠放视频片段的混合模式。`MixModeType`收录了在 CapCut 9.5.0.4050 中的十种模式：正片叠底、颜色减淡、颜色加深、线性加深、柔光、强光、滤色、叠加、变亮、变暗。下层片段需从主轨道的 0 秒开始，上层片段应在更高的轨道上：
+
+```python
+import pycapcut as cc
+
+# 假定已有草稿文件 script，且两个视频文件均不少于 5 秒
+script.add_track(cc.TrackType.video, "背景", relative_index=0)
+script.add_track(cc.TrackType.video, "前景", relative_index=2)
+script.add_segment(cc.VideoSegment("background.mp4", cc.trange_seconds(0, duration=5)), "背景")
+
+foreground = cc.VideoSegment("foreground.mp4", cc.trange_seconds(0, duration=5))
+foreground.set_mix_mode(cc.MixModeType.正片叠底)
+script.add_segment(foreground, "前景")
+```
+
+再次调用会以最后一次设置为准，片段只保留一个混合模式。效果需要上层片段与下层画面重叠才能看出。
 
 #### 独立轨道上的特效和滤镜
 除了为视频片段添加特效和滤镜外，你还可以创建独立的特效轨道和滤镜轨道，并在其上添加特效和滤镜片段。

@@ -12,6 +12,7 @@ from .text_segment import TextSegment, TextStyle, TextBorder, TextBackground, Te
 from .metadata import FontType
 from .metadata import MaskType
 from .metadata import TransitionType, FilterType
+from .metadata import MixModeType
 from .metadata import IntroType, OutroType, GroupAnimationType
 from .metadata import TextIntro, TextOutro, TextLoopAnim
 from .metadata import AudioSceneEffectType
@@ -34,6 +35,7 @@ __all__ = [
     "FontType",
     "MaskType",
     "FilterType",
+    "MixModeType",
     "TransitionType",
     "IntroType",
     "OutroType",
