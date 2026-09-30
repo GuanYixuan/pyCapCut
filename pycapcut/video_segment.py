@@ -3,6 +3,7 @@
 包含图像调节设置、动画效果、特效、转场等相关类
 """
 
+import math
 import uuid
 from copy import deepcopy
 
@@ -18,6 +19,45 @@ from .metadata import EffectMeta, EffectParamInstance
 from .metadata import MaskMeta, MaskType, FilterType, MixModeType, TransitionType
 from .metadata import IntroType, OutroType, GroupAnimationType
 from .metadata import VideoSceneEffectType, VideoCharacterEffectType
+
+
+def _normalize_rgba_color(color: str) -> str:
+    """将 #RRGGBBAA 颜色规范为小写。"""
+    if not isinstance(color, str):
+        raise ValueError("颜色必须使用 '#RRGGBBAA' 格式")
+    color = color.strip()
+    if len(color) != 9 or not color.startswith("#") or any(
+        char not in "0123456789abcdefABCDEF" for char in color[1:]
+    ):
+        raise ValueError("颜色必须使用 '#RRGGBBAA' 格式")
+    return color.lower()
+
+
+class Chroma:
+    """作用于单个视频片段的色度抠图素材。"""
+
+    def __init__(self, color: str, intensity_value: float, shadow_value: float,
+                 edge_smooth_value: float, spill_value: float):
+        self.global_id = str(uuid.uuid4()).upper()
+        self.color = _normalize_rgba_color(color)
+        self.intensity_value = intensity_value
+        self.shadow_value = shadow_value
+        self.edge_smooth_value = edge_smooth_value
+        self.spill_value = spill_value
+
+    def export_json(self) -> Dict[str, Any]:
+        return {
+            "color": self.color,
+            "edge_smooth_value": self.edge_smooth_value,
+            "id": self.global_id,
+            "intensity_value": self.intensity_value,
+            "shadow_value": self.shadow_value,
+            "should_transfer_color": True,
+            "spill_value": self.spill_value,
+            "type": "chroma",
+            "version": "v2",
+        }
+
 
 class Mask:
     """蒙版对象"""
@@ -340,6 +380,8 @@ class VideoSegment(VisualSegment):
 
     在放入轨道时自动添加到素材列表中
     """
+    chroma: Optional[Chroma]
+    """色度抠图实例, 可能为空, 在放入轨道时添加到素材列表中"""
 
     def __init__(self, material: Union[VideoMaterial, str], target_timerange: Timerange, *,
                  source_timerange: Optional[Timerange] = None, speed: Optional[float] = None, volume: float = 1.0,
@@ -383,6 +425,7 @@ class VideoSegment(VisualSegment):
         self.transition = None
         self.mask = None
         self.background_filling = None
+        self.chroma = None
         self.fade = None
 
     def add_animation(self, animation_type: Union[IntroType, OutroType, GroupAnimationType],
@@ -565,6 +608,35 @@ class VideoSegment(VisualSegment):
             raise ValueError(f"无效的背景填充类型 {fill_type}")
 
         self.extra_material_refs.append(self.background_filling.global_id)
+        return self
+
+    def add_chroma(self, color: str, intensity: float = 20.0, shadow: float = 0.0,
+                   edge_smooth: float = 0.0, spill: float = 0.0) -> "VideoSegment":
+        """为视频片段添加色度抠图；四个参数使用 CapCut 界面的 0–100 数值。
+
+        Args:
+            color (str): 取色器选中的颜色，格式为 #RRGGBBAA。
+            intensity (float, optional): 强度，默认为20。
+            shadow (float, optional): 阴影，默认为0。
+            edge_smooth (float, optional): 边缘羽化，默认为0。
+            spill (float, optional): 边缘清除，默认为0。
+
+        Raises:
+            ValueError: 当前片段已有色度抠图，或颜色及参数无效。
+        """
+        if self.chroma is not None:
+            raise ValueError("当前片段已有色度抠图, 不能再添加新的色度抠图")
+
+        params = {"intensity": intensity, "shadow": shadow,
+                  "edge_smooth": edge_smooth, "spill": spill}
+        for name, value in params.items():
+            if (isinstance(value, bool) or not isinstance(value, (int, float))
+                    or not math.isfinite(value) or not 0 <= value <= 100):
+                raise ValueError(f"色度抠图参数 {name}={value!r} 超出了范围 0~100")
+
+        self.chroma = Chroma(color, intensity / 100.0, shadow / 100.0,
+                             edge_smooth / 100.0, spill / 100.0)
+        self.extra_material_refs.append(self.chroma.global_id)
         return self
 
     def export_json(self) -> Dict[str, Any]:

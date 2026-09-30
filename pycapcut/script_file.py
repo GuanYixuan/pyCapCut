@@ -14,7 +14,7 @@ from .time_util import Timerange, tim, srt_tstamp
 from .local_materials import VideoMaterial, AudioMaterial
 from .segment import BaseSegment, Speed, ClipSettings, AudioFade
 from .audio_segment import AudioSegment, AudioEffect
-from .video_segment import VideoSegment, StickerSegment, SegmentAnimations, VideoEffect, Transition, Filter, MixMode, BackgroundFilling
+from .video_segment import VideoSegment, StickerSegment, SegmentAnimations, VideoEffect, Transition, Filter, MixMode, BackgroundFilling, Chroma
 from .effect_segment import EffectSegment, FilterSegment
 from .text_segment import TextSegment, TextStyle, TextBubble
 from .track import TrackType, BaseTrack, Track
@@ -41,6 +41,8 @@ class ScriptMaterial:
     """动画素材列表"""
     video_effects: List[VideoEffect]
     """视频特效列表"""
+    chromas: List[Chroma]
+    """色度抠图列表"""
 
     speeds: List[Speed]
     """变速列表"""
@@ -65,6 +67,7 @@ class ScriptMaterial:
         self.audio_fades = []
         self.animations = []
         self.video_effects = []
+        self.chromas = []
 
         self.speeds = []
         self.masks = []
@@ -78,7 +81,7 @@ class ScriptMaterial:
     @overload
     def __contains__(self, item: Union[AudioFade, AudioEffect]) -> bool: ...
     @overload
-    def __contains__(self, item: Union[SegmentAnimations, VideoEffect, Transition, Filter, MixMode]) -> bool: ...
+    def __contains__(self, item: Union[SegmentAnimations, VideoEffect, Chroma, Transition, Filter, MixMode]) -> bool: ...
 
     def __contains__(self, item) -> bool:
         if isinstance(item, VideoMaterial):
@@ -93,6 +96,8 @@ class ScriptMaterial:
             return item.animation_id in [ani.animation_id for ani in self.animations]
         elif isinstance(item, VideoEffect):
             return item.global_id in [effect.global_id for effect in self.video_effects]
+        elif isinstance(item, Chroma):
+            return item.global_id in [chroma.global_id for chroma in self.chromas]
         elif isinstance(item, Transition):
             return item.global_id in [transition.global_id for transition in self.transitions]
         elif isinstance(item, Filter):
@@ -112,7 +117,7 @@ class ScriptMaterial:
             "audios": [audio.export_json() for audio in self.audios],
             "beats": [],
             "canvases": [canvas.export_json() for canvas in self.canvases],
-            "chromas": [],
+            "chromas": [chroma.export_json() for chroma in self.chromas],
             "color_curves": [],
             "digital_humans": [],
             "drafts": [],
@@ -341,6 +346,9 @@ class ScriptFile:
             # 背景填充
             if segment.background_filling is not None:
                 self.materials.canvases.append(segment.background_filling)
+            # 色度抠图
+            if segment.chroma is not None and segment.chroma not in self.materials:
+                self.materials.chromas.append(segment.chroma)
 
             self.materials.speeds.append(segment.speed)
         elif isinstance(segment, StickerSegment):

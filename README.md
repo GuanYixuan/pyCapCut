@@ -39,6 +39,7 @@
 - ☑️ 视频片段的[入场/出场/组合动画](#添加片段动画)
 - ☑️ 添加[蒙版](#蒙版)、[片段特效](#添加片段特效)和[滤镜](#添加片段滤镜)
 - ☑️ 为叠放的视频片段设置[混合模式](#设置片段混合模式)
+- ☑️ 为视频片段添加[色度抠图](#添加色度抠图)
 - ☑️ 视频背景填充[(示例代码)](demo.py)
 ### 贴纸
 - ☑️ 根据元信息[添加贴纸](#提取素材元数据)
@@ -507,6 +508,22 @@ script.add_segment(foreground, "前景")
 ```
 
 再次调用会以最后一次设置为准，片段只保留一个混合模式。效果需要上层片段与下层画面重叠才能看出。
+
+#### 添加色度抠图
+
+对视频片段调用 `add_chroma()`。颜色使用 `#RRGGBBAA`；四个数值按 CapCut 界面上的 0–100 填写，依次对应强度、阴影、边缘羽化、边缘清除。每个片段只能添加一次，并应在 `script.add_segment()` 之前调用。
+
+```python
+import pycapcut as cc
+
+script.add_track(cc.TrackType.video, "背景", relative_index=0)
+script.add_track(cc.TrackType.video, "前景", relative_index=2)
+script.add_segment(cc.VideoSegment("background.mp4", cc.trange_seconds(0, duration=4)), "背景")
+
+foreground = cc.VideoSegment("green_screen.mp4", cc.trange_seconds(1, duration=2))
+foreground.add_chroma("#00FE00FF", intensity=36, shadow=10, edge_smooth=3, spill=26)
+script.add_segment(foreground, "前景")
+```
 
 #### 独立轨道上的特效和滤镜
 除了为视频片段添加特效和滤镜外，你还可以创建独立的特效轨道和滤镜轨道，并在其上添加特效和滤镜片段。
