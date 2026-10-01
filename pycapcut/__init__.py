@@ -16,6 +16,7 @@ from .metadata import MixModeType
 from .metadata import IntroType, OutroType, GroupAnimationType
 from .metadata import TextIntro, TextOutro, TextLoopAnim
 from .metadata import AudioSceneEffectType
+from .metadata import ToneEffectType
 from .metadata import VideoSceneEffectType, VideoCharacterEffectType
 
 from .track import TrackType
@@ -44,6 +45,7 @@ __all__ = [
     "TextOutro",
     "TextLoopAnim",
     "AudioSceneEffectType",
+    "ToneEffectType",
     "VideoSceneEffectType",
     "VideoCharacterEffectType",
     "CropSettings",

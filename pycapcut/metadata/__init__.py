@@ -17,6 +17,7 @@ from .video_group_animation import GroupAnimationType
 
 # 音频特效
 from .audio_scene_effect import AudioSceneEffectType
+from .tone_effect import ToneEffectType
 
 # 文本动画
 from .text_intro import TextIntro
@@ -47,6 +48,7 @@ __all__ = [
     "TextOutro",
     "TextLoopAnim",
     "AudioSceneEffectType",
+    "ToneEffectType",
     "VideoSceneEffectType",
     "VideoCharacterEffectType"
 ]

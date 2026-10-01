@@ -446,7 +446,7 @@ video_segment2.add_mask(MaskType.圆形, size=0.5)
 ### 特效、动画和滤镜
 #### 特效类型
 目前支持的**特效**类型由以下枚举类定义：
-- 音频：`AudioSceneEffectType`（场景音）
+- 音频：`AudioSceneEffectType`（场景音）、`ToneEffectType`（音色，目前仅收录“花栗鼠”）
 - 视频：`VideoSceneEffectType`（画面特效）、`VideoCharacterEffectType`（人物特效）
 
 目前支持的**动画**类型由以下枚举类定义：
@@ -472,12 +472,20 @@ assert VideoSceneEffectType.from_name("__全息 扫描__") == VideoSceneEffectTy
 
 下方的例子为视频片段添加一个`全息扫描`特效，并且指定其`氛围`参数为（CapCut中的）100，其余参数默认：
 ```python
-from pyJianYingDraft import VideoSceneEffectType
+from pycapcut import VideoSceneEffectType
 
 video_segment.add_effect(VideoSceneEffectType.全息扫描,
                          [None, None, 100.0]) # 不设置前两个参数, 第三个参数（氛围）为100，其余参数也不设置
 ```
-音频片段的特效添加方法与视频片段相似
+音频片段的特效添加方法与视频片段相似。已验证的“花栗鼠”音色可这样添加，两个参数依次为音调和音色，范围均为 0～100，默认均为 50：
+
+```python
+from pycapcut import ToneEffectType
+
+audio_segment.add_effect(ToneEffectType.花栗鼠, [50, 42])
+```
+
+同一音频片段只能添加一个音色；音色与场景音可以同时添加。当前仅“花栗鼠”的 CapCut 元数据和导出效果经过验证。
 
 #### 添加片段滤镜
 滤镜的添加方法与特效类似，其使用的是`VideoSegment.add_filter()`方法。
