@@ -3,7 +3,7 @@
 from .effect_meta import EffectEnum, AnimationMeta
 
 class TextOutro(EffectEnum):
-    """文字出场动画, 默认时长为0.5秒"""
+    """文字出场动画，默认时长由各效果元数据定义"""
 
     # 免费特效
     信号失真             = AnimationMeta("信号失真", False, 0.500, "7529385712261614865", "7529385712261614865", "e29aad4d0f9cc27c50778c39d2cc53ba")

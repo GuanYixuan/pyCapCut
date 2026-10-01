@@ -3,7 +3,7 @@
 from .effect_meta import EffectEnum, AnimationMeta
 
 class TextIntro(EffectEnum):
-    """文字入场动画, 默认时长为0.5秒"""
+    """文字入场动画，默认时长由各效果元数据定义"""
 
     # 免费特效
     丁达尔光效           = AnimationMeta("丁达尔光效", False, 0.500, "7529375005184937217", "7529375005184937217", "de975c9d345c03c7fba261b3eb767dab")
