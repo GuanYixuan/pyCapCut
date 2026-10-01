@@ -446,7 +446,7 @@ video_segment2.add_mask(MaskType.圆形, size=0.5)
 ### 特效、动画和滤镜
 #### 特效类型
 目前支持的**特效**类型由以下枚举类定义：
-- 音频：`AudioSceneEffectType`（场景音）、`ToneEffectType`（音色，目前仅收录“花栗鼠”）
+- 音频：`AudioSceneEffectType`（场景音）、`ToneEffectType`（音色，收录 11 项传统参数类候选）
 - 视频：`VideoSceneEffectType`（画面特效）、`VideoCharacterEffectType`（人物特效）
 
 目前支持的**动画**类型由以下枚举类定义：
@@ -485,7 +485,7 @@ from pycapcut import ToneEffectType
 audio_segment.add_effect(ToneEffectType.花栗鼠, [50, 42])
 ```
 
-同一音频片段只能添加一个音色；音色与场景音可以同时添加。当前仅“花栗鼠”的 CapCut 元数据和导出效果经过验证。
+同一音频片段只能添加一个音色；音色与场景音可以同时添加。`ToneEffectType` 当前收录 CapCut 缓存中 11 项有滑块参数、未标记 `is_voice_conversion` 的传统音色。
 
 #### 添加片段滤镜
 滤镜的添加方法与特效类似，其使用的是`VideoSegment.add_filter()`方法。
