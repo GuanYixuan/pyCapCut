@@ -418,7 +418,7 @@ class TextSegment(VisualSegment):
         if self.font:
             content_json["styles"][0]["font"] = {
                 "id": self.font.resource_id,
-                "path": "C:/%s.ttf" % self.font.name  # 并不会真正在此处放置字体文件
+                "path": "D:"  # 字体占位路径，与花字的 C: 分开，避免解析路径时被错误拼接
             }
         if self.effect:
             content_json["styles"][0]["effectStyle"] = {
