@@ -12,4 +12,4 @@ class MaskType(EffectEnum):
     圆形 = MaskMeta("圆形", "circle", "6791700663249146381", "636075", "9a55eae0e99ee6d1ecbc6defaf0501ec", 1.0)
     矩形 = MaskMeta("矩形", "rectangle", "6791700809454195207", "636077", "ef361d96c456cd6077c76d737f98898d", 1.0)
     爱心 = MaskMeta("爱心", "geometric_shape", "6794051276482023949", "636079", "0bf09fa1e3a32464fed4f71e49a8ab01", 1.115)
-    星形 = MaskMeta("星形", "geometric_shape", "6794051169434997255", "636081", "155612dee601d3f5422a3fbeabc7610c", 1.05)
+    星形 = MaskMeta("星形", "geometric_shape", "7665298069453279761", "636081", "155612dee601d3f5422a3fbeabc7610c", 1.05)

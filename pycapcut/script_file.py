@@ -48,6 +48,8 @@ class ScriptMaterial:
     """变速列表"""
     masks: List[Dict[str, Any]]
     """蒙版列表"""
+    common_mask: List[Dict[str, Any]]
+    """新版 CapCut 的蒙版列表，与旧格式共用素材 ID"""
     transitions: List[Transition]
     """转场效果列表"""
     filters: List[Union[Filter, TextBubble]]
@@ -71,6 +73,7 @@ class ScriptMaterial:
 
         self.speeds = []
         self.masks = []
+        self.common_mask = []
         self.transitions = []
         self.filters = []
         self.mix_modes = []
@@ -118,6 +121,7 @@ class ScriptMaterial:
             "beats": [],
             "canvases": [canvas.export_json() for canvas in self.canvases],
             "chromas": [chroma.export_json() for chroma in self.chromas],
+            "common_mask": self.common_mask,
             "color_curves": [],
             "digital_humans": [],
             "drafts": [],
@@ -340,6 +344,7 @@ class ScriptFile:
             # 蒙版
             if segment.mask is not None:
                 self.materials.masks.append(segment.mask.export_json())
+                self.materials.common_mask.append(segment.mask.export_common_json())
             # 转场
             if (segment.transition is not None) and (segment.transition not in self.materials):
                 self.materials.transitions.append(segment.transition)

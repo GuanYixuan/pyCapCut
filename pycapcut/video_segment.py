@@ -120,6 +120,39 @@ class Mask:
             # 不导出path字段
         }
 
+    def export_common_json(self) -> Dict[str, Any]:
+        """导出新版 CapCut 使用的 `materials.common_mask` 条目。
+
+        与旧格式共用素材 ID，片段的 `extra_material_refs` 无需额外引用。
+        """
+        json_data = self.export_json()
+        json_data.update({
+            "category": "video",
+            "category_id": "jichu",
+            "category_name": "基础",
+            "is_old_version": False,
+            "loader_work_space": "",
+            "panel": "",
+            "source_platform": 0,
+            "track_segment": "",
+            "text_config": {
+                "align_type": 15,
+                "bold_width": 0.0,
+                "char_spacing": 0.0,
+                "content": "",
+                "font_name": "",
+                "font_path": "",
+                "font_resource_id": "",
+                "font_size": 15.0,
+                "has_underline": False,
+                "italic_degree": 0,
+                "line_gap": 0.0,
+                "scale": 1.0,
+            },
+        })
+        json_data["config"] = dict(json_data["config"], expansion=0.0)
+        return json_data
+
 class VideoEffect:
     """视频特效素材"""
 
