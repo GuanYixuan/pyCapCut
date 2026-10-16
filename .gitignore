@@ -12,5 +12,5 @@ dist/
 .venv/
 venv/
 
-tools/
 ignored/
+/AGENTS.md

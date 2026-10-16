@@ -1,0 +1,19 @@
+include README.md
+include english_readme.md
+include pypi_readme.md
+include requirements.txt
+recursive-include pycapcut *.py *.json
+
+prune tests
+prune tools
+prune ignored
+prune readme_assets
+prune build
+prune dist
+prune .git
+prune .vscode
+
+exclude AGENTS.md AGENTS.local.md CLAUDE.md
+exclude demo.py generate_example.py replace_example.py temp.py
+exclude .flake8 .gitignore
+global-exclude *.lnk *.log *.pyc *.pyo *.pyd .DS_Store Thumbs.db

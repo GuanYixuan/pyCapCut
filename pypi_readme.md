@@ -1,66 +1,108 @@
-## A lightweight, flexible, and easy-to-use Python tool for generating and exporting CapCut drafts to build fully automated video editing/remix pipelines!
+<!-- Generated from english_readme.md by tools/generate_pypi_readme.py. Do not edit directly. -->
 
-> 🧪 This project is being migrated from [PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft). Please ⭐️ to stay tuned!
+# pyCapCut
+
+### A lightweight, flexible Python tool for generating and editing CapCut drafts
+
+[中文版本](https://github.com/GuanYixuan/pyCapCut/blob/main/README.md)
+
+> This project shares its origins with [PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft) and targets CapCut drafts.
 
 > 📢 Join the [Discord server](https://discord.gg/WfHgGQvhyW) to discuss usage and new features
 
 ## Workflow
-![Workflow](https://github.com/GuanYixuan/pyJianYingDraft/raw/main/readme_assets/%E4%BD%BF%E7%94%A8%E6%80%9D%E8%B7%AF.jpg)
+
+![Workflow](https://github.com/GuanYixuan/pyCapCut/raw/main/readme_assets/%E4%BD%BF%E7%94%A8%E6%80%9D%E8%B7%AF.jpg)
+
+Open the generated draft in CapCut and export the video manually. Automated export is currently unsupported.
 
 # Feature List
 
-> ℹ Please refer to [Github Repository](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md) for full documentation.
-
-### Template Mode
-> 🧪 This module has just been migrated. If something doesn’t fit your template, please open an issue.
-
-- ☑️ [Load](#load-template) an (unencrypted) `draft_content.json` file as a template
-- ☑️ [Replace media for video/audio segments](#replace-media-by-name)
-- ☑️ [Modify text contents of text segments](#replace-text-segment-content)
-- ☑️ [Import entire audio/video/text tracks from a template draft into another draft](#import-tracks-from-a-template-draft)
-- ☑️ [Extract resource metadata (stickers/bubbles/fancy text, etc.)](#extract-resource-metadata)
-
-### Batch Export
-> ⚠️ This module is being migrated. If interested, see the corresponding part in [PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft?tab=readme-ov-file#%E6%89%B9%E9%87%8F%E5%AF%BC%E5%87%BA%E8%8D%89%E7%A8%BF)
-
-- ☑️ Control CapCut to open a specific draft
-- ☑️ Export a draft to a specific location
-- ☑️ Adjust export resolution and frame rate
+✅ Supported. The validation version column lists confirmed CapCut versions; “—” means no version is recorded. It does not specify a minimum version or guarantee compatibility with every version.
 
 ### Video and Image
-> 🧪 This module has just been migrated. If animations/effects/transitions don’t take effect, please open an issue.
 
-- ☑️ Add local video/image media, and [customize segment timing, duration, or playback speed](#source-trimming-and-global-speed)
-- ☑️ Adjust audio fade in/out durations
-- ☑️ [Global video adjustments](#global-video-adjustments) (rotation, scale, brightness, etc.) and [keyframe generation](#keyframes)
-- ☑️ [In/Out/Group animations](#add-segment-animations) for video segments
-- ☑️ Add [masks](#masks), [segment effects](#add-segment-effects), and [filters](#add-segment-filters)
-- ☑️ Video background fill [(example code)](demo.py)
+| Feature | Support | Validation version |
+|---|---|---|
+| Local video/image media and [timing](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#source-trimming-and-global-speed) | ✅ | 8.2.0 |
+| [Global video adjustments](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#global-video-adjustments) | ✅ | 8.2.0 |
+| [Video keyframes](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#keyframes) | ✅ | — |
+| [Video masks](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#masks) | ✅ | 9.5.0.4050 |
+| [Video chroma keying](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#add-chroma-keying) | ✅ | 9.5.0.4050 |
+| [Video blend modes](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#set-segment-blend-mode) | ✅ | 9.5.0.4050 |
+| Video background fill [(example)](https://github.com/GuanYixuan/pyCapCut/blob/main/demo.py) | ✅ | — |
+| [Audio fades](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#audio-fades) for videos with audio | ✅ | — |
+| [Pitch change during speed adjustment](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#pitch-change-during-speed-adjustment) for videos with audio | ✅ | 9.5.0.4050 |
 
 ### Stickers
-- ☑️ Add stickers based on metadata [extraction](#extract-resource-metadata)
-- ☑️ [Keyframe](#keyframes) generation for stickers
+
+| Feature | Support | Validation version |
+|---|---|---|
+| Add stickers using [resource metadata](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#extract-resource-metadata) | ✅ | — |
+| [Sticker keyframes](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#keyframes) | ✅ | — |
 
 ### Audio
-- ☑️ Add local audio media, and [customize segment timing, duration, or playback speed](#source-trimming-and-global-speed)
-- ☑️ Adjust fade in/out durations [(example code)](demo.py), adjust volume [(example code)](demo.py), and its [keyframes](#keyframes)
-- ☑️ Add [scene audio effects](#add-segment-effects) to audio segments and configure parameters
+
+| Feature | Support | Validation version |
+|---|---|---|
+| Local audio media and [timing](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#source-trimming-and-global-speed) | ✅ | 9.5.0.4050 |
+| [Audio fades](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#audio-fades), volume and [keyframes](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#keyframes) | ✅ | — |
+| [Pitch change during speed adjustment](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#pitch-change-during-speed-adjustment) | ✅ | 9.5.0.4050 |
+| [Scene audio effects](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#add-segment-effects) | ✅ | — |
+| [Tone effects](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#add-segment-effects) | ✅ | 9.5.0.4050 (花栗鼠) |
 
 ### Tracks
-- ☑️ [Add tracks](#multi-track-operations) and [append segments to a specific track](#multi-track-operations)
-- ☑️ Customize [layer ordering](#multi-track-operations) among video/filter/effect tracks
+
+| Feature | Support | Validation version |
+|---|---|---|
+| [Add tracks and segments](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#multi-track-operations) | ✅ | 8.2.0 |
+| [Track layer ordering](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#multi-track-operations) | ✅ | 8.2.0 (video tracks) |
+| [Main track magnet](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#main-track-magnet) | ✅ | 8.2.0 |
 
 ### Effects, Filters, and Transitions
-- ☑️ Clip-attached [effects](#add-segment-effects), [filters](#add-segment-filters), and [animations](#add-segment-animations)
-- ☑️ [Standalone tracks for effects and filters](#effect-and-filter-tracks)
-- ☑️ Add transitions [(example code)](demo.py) and customize duration
+
+| Feature | Support | Validation version |
+|---|---|---|
+| [Video segment animations](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#add-segment-animations) | ✅ | — |
+| [Video segment effects](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#add-segment-effects) | ✅ | — |
+| [Video segment filters](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#add-segment-filters) | ✅ | — |
+| [Standalone effect and filter tracks](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#effect-and-filter-tracks) | ✅ | — |
+| Transitions [(example)](https://github.com/GuanYixuan/pyCapCut/blob/main/demo.py) | ✅ | — |
 
 ### Text and Subtitles
-- ☑️ [Add text, set fonts and styles](#add-text), modify [position and rotation](#global-video-adjustments) of text segments
-- ☑️ [Keyframes](#keyframes) and [animations](#add-segment-animations) for text
-- ☑️ Text stroke and text background
-- ☑️ Text bubble effects and fancy text effects [(example code)](demo.py)
-- ☑️ [Automatic line wrapping](#automatic-line-wrapping) with configurable max line width
-- ☑️ [Import `.srt` files](#import-subtitles) to create subtitles in bulk and style them
 
-> ℹ The [Github Repository](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md) contains a [demonstration of the above features](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#quick-start).
+| Feature | Support | Validation version |
+|---|---|---|
+| [Text and styles](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#add-text) | ✅ | 8.2.0 |
+| [Fonts](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#add-text) | ✅ | 9.5.0.4050 |
+| [Text keyframes](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#keyframes) | ✅ | — |
+| [Text animations](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#add-segment-animations) | ✅ | — |
+| Text stroke, background and shadow | ✅ | — |
+| Text bubbles and fancy text [(example)](https://github.com/GuanYixuan/pyCapCut/blob/main/demo.py) | ✅ | 9.5.0.4050 (fancy text) |
+| [Automatic line wrapping](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#automatic-line-wrapping) | ✅ | — |
+| [Import SRT subtitles](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#import-subtitles) | ✅ | — |
+
+### Template Mode
+
+| Feature | Support | Validation version |
+|---|---|---|
+| [Load plaintext drafts](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#load-template) | ✅ | 8.2.0 |
+| [Replace media by name](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#replace-media-by-name) | ✅ | — |
+| [Replace media by segment](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#replace-media-by-segment) | ✅ | — |
+| [Replace text content](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#replace-text-segment-content) | ✅ | — |
+| [Import template tracks](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#import-tracks-from-a-template-draft) | ✅ | — |
+| [Extract resource metadata](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#extract-resource-metadata) | ✅ | — |
+
+# Installation
+
+pyCapCut now supports pip installation (excluding demo).
+
+```bash
+pip install pycapcut
+```
+
+### Cross-platform Compatibility
+
+Install the library on Windows, Linux or macOS to generate and edit drafts. **Open the generated drafts in CapCut for Windows and export videos manually.**
+
+For complete usage examples, see the [full documentation](https://github.com/GuanYixuan/pyCapCut/blob/main/english_readme.md#quick-start).
