@@ -7,7 +7,7 @@ _HERE = Path(__file__).resolve().parent
 
 setup(
     name="pycapcut",
-    version="0.0.3",
+    version="0.0.4",
     author="gary318",
     description="A lightweight, flexible Python tool for generating and editing CapCut drafts",
     # 生成文件随源码发布，构建前通过 tools/generate_pypi_readme.py 更新。

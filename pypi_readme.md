@@ -8,6 +8,8 @@
 
 > This project shares its origins with [PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft) and targets CapCut drafts.
 
+> ⚠️ **0.1.0 preview**: The next version will align track ordering and references with pyJianYingDraft, introduce `append_track(s)` / `insert_track(s)` and `TrackSpec` / `TrackRef`, and remove `add_track`. Scripts that depend on the old API or track layering behavior will need updating; a migration guide will accompany the release. To keep the current behavior, pin `pip install pycapcut==0.0.4` and refer to that version's [documentation](https://github.com/GuanYixuan/pyCapCut/blob/0.0.4/english_readme.md) and [example](https://github.com/GuanYixuan/pyCapCut/blob/0.0.4/demo.py).
+
 > 📢 Join the [Discord server](https://discord.gg/WfHgGQvhyW) to discuss usage and new features
 
 ## Workflow

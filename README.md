@@ -6,6 +6,8 @@
 
 > 本项目与 [PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft) 同源，面向 CapCut 草稿。
 
+> ⚠️ **0.1.0 版本预告**：下一版本将与剪映侧统一轨道排序和引用方式，新增 `append_track(s)`／`insert_track(s)` 及 `TrackSpec`／`TrackRef`，并删除 `add_track`。依赖旧接口或轨道层级行为的脚本需要迁移，届时将提供迁移指南。需要沿用当前用法的用户可固定安装 `pip install pycapcut==0.0.4`，并查阅该版本的[文档](https://github.com/GuanYixuan/pyCapCut/blob/0.0.4/README.md)和[示例](https://github.com/GuanYixuan/pyCapCut/blob/0.0.4/demo.py)。
+
 > 📢 欢迎加入[Discord服务器](https://discord.gg/WfHgGQvhyW)进行用法或新功能的讨论
 
 ## 使用思路
