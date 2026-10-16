@@ -1,100 +1,133 @@
 # pyCapCut
 
-### 与[PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft)同源的轻量、灵活、易上手Python CapCut草稿生成及导出工具，构建全自动视频剪辑/混剪流水线！
+### 轻量、灵活、易上手的 Python CapCut 草稿生成与编辑工具
 
 [English Version](english_readme.md)
 
-> 🧪 本项目正在从[PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft)进行迁移，欢迎⭐️此项目保持关注！
+> 本项目与 [PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft) 同源，面向 CapCut 草稿。
 
 > 📢 欢迎加入[Discord服务器](https://discord.gg/WfHgGQvhyW)进行用法或新功能的讨论
 
 ## 使用思路
+
 ![使用思路](readme_assets/使用思路.jpg)
+
+生成后请在 CapCut 中打开草稿，并通过应用手动导出视频。目前CapCut版暂不支持自动导出。
 
 # 功能清单
 
-### 模板模式
-> 🧪 本模块刚刚完成迁移，若出现不适配的情况欢迎提出issue
-
-- ☑️ [加载](#加载模板)（未加密的）`draft_content.json`文件作为模板
-- ☑️ [替换音视频片段的素材](#根据名称替换素材)
-- ☑️ [修改文本片段的文本内容](#替换文本片段的内容)
-- ☑️ [将模板草稿中的音视频/文本轨道整体导入到另一草稿中](#导入模板草稿中的轨道)
-- ☑️ [提取模板中出现的贴纸/气泡/花字等元信息](#提取素材元数据)
-
-### 批量导出
-> ⚠️ 本模块正在迁移中，若有兴趣可参见[PyJianYingDraft中相应部分](https://github.com/GuanYixuan/pyJianYingDraft?tab=readme-ov-file#%E6%89%B9%E9%87%8F%E5%AF%BC%E5%87%BA%E8%8D%89%E7%A8%BF)
-
-- ☑️ 控制CapCut打开指定草稿
-- ☑️ [导出草稿至指定位置](#批量导出草稿)
-- ☑️ 调节导出分辨率和帧率
+✅ 验证版本列为已确认的 CapCut 版本；“—”表示尚未记录版本。
 
 ### 视频与图片
-> 🧪 本模块刚刚完成迁移，若有特效/动画/转场等不生效的情况欢迎提出issue
 
-- ☑️ 添加本地视频/图片素材，并[自定义片段的时间、持续时长或播放速度](#素材截取与整体变速)
-- ☑️ 带音轨视频可在变速时[改变音调](#变速时改变音调)
-- ☑️ 视频片段的音频淡入淡出效果
-- ☑️ [视频整体调节](#视频整体调节)（旋转、缩放、亮度等）以及[关键帧生成](#关键帧)
-- ☑️ 视频片段的[入场/出场/组合动画](#添加片段动画)
-- ☑️ 添加[蒙版](#蒙版)、[片段特效](#添加片段特效)和[滤镜](#添加片段滤镜)
-- ☑️ 为叠放的视频片段设置[混合模式](#设置片段混合模式)
-- ☑️ 为视频片段添加[色度抠图](#添加色度抠图)
-- ☑️ 视频背景填充[(示例代码)](demo.py)
+| 功能名称 | 支持状态 | 验证版本 |
+|---|---|---|
+| 本地视频/图片素材与[时间控制](#素材截取与整体变速) | ✅ | 8.2.0 |
+| [视频整体调节](#视频整体调节) | ✅ | 8.2.0 |
+| [视频关键帧](#关键帧) | ✅ | — |
+| [视频蒙版](#蒙版) | ✅ | 9.5.0.4050 |
+| [视频色度抠图](#添加色度抠图) | ✅ | 9.5.0.4050 |
+| [视频混合模式](#设置片段混合模式) | ✅ | 9.5.0.4050 |
+| 视频背景填充[(示例代码)](demo.py) | ✅ | — |
+| 带音轨视频的[音频淡入淡出](#音频淡入淡出) | ✅ | — |
+| 带音轨视频[变速时改变音调](#变速时改变音调) | ✅ | 9.5.0.4050 |
+
 ### 贴纸
-- ☑️ 根据元信息[添加贴纸](#提取素材元数据)
-- ☑️ 贴纸的[关键帧](#关键帧)生成
+
+| 功能名称 | 支持状态 | 验证版本 |
+|---|---|---|
+| 根据[元数据添加贴纸](#提取素材元数据) | ✅ | — |
+| [贴纸关键帧](#关键帧) | ✅ | — |
+
 ### 音频
-- ☑️ 添加本地音频素材，并[自定义片段的时间、持续时长或播放速度](#素材截取与整体变速)
-- ☑️ 音频片段可在变速时[改变音调](#变速时改变音调)
-- ☑️ 调整淡入淡出时长[(示例代码)](demo.py)，调整音量[(示例代码)](demo.py)及其[关键帧](#关键帧)
-- ☑️ 添加音频片段的[场景音效果](#添加片段特效)，并设置参数
+
+| 功能名称 | 支持状态 | 验证版本 |
+|---|---|---|
+| 本地音频素材与[时间控制](#素材截取与整体变速) | ✅ | 9.5.0.4050 |
+| [音频淡入淡出](#音频淡入淡出)、音量及[关键帧](#关键帧) | ✅ | — |
+| [变速时改变音调](#变速时改变音调) | ✅ | 9.5.0.4050 |
+| [场景音效果](#添加片段特效) | ✅ | — |
+| [音色效果](#添加片段特效) | ✅ | 9.5.0.4050（花栗鼠） |
+
 ### 轨道
-- ☑️ [添加轨道](#多轨道操作)以及[将片段添加到指定轨道](#多轨道操作)
-- ☑️ 自定义视频/滤镜/特效轨道的[层级关系](#多轨道操作)
+
+| 功能名称 | 支持状态 | 验证版本 |
+|---|---|---|
+| [添加轨道与添加片段](#多轨道操作) | ✅ | 8.2.0 |
+| [轨道层级控制](#多轨道操作) | ✅ | 8.2.0（视频轨道） |
+| [主轨磁吸开关](#主轨磁吸) | ✅ | 8.2.0 |
+
 ### 特效、滤镜和转场
-- ☑️ 吸附于片段上的[特效](#添加片段特效)、[滤镜](#添加片段滤镜)和[动画](#添加片段动画)
-- ☑️ 位于[独立轨道的特效和滤镜](#独立轨道上的特效和滤镜)
-- ☑️ 添加转场[(示例代码)](demo.py)，并自定义其时长
+
+| 功能名称 | 支持状态 | 验证版本 |
+|---|---|---|
+| [视频片段动画](#添加片段动画) | ✅ | — |
+| [视频片段特效](#添加片段特效) | ✅ | — |
+| [视频片段滤镜](#添加片段滤镜) | ✅ | — |
+| [独立轨道特效和滤镜](#独立轨道上的特效和滤镜) | ✅ | — |
+| 转场[(示例代码)](demo.py) | ✅ | — |
+
 ### 文本及字幕
-- ☑️ [添加文本、设置字体及样式](#添加文本)、修改文本片段的[位置及旋转设置](#视频整体调节)
-- ☑️ 文本的[关键帧](#关键帧)以及[动画](#添加片段动画)
-- ☑️ 文字描边、背景和阴影
-- ☑️ 文字气泡效果和花字效果[(示例代码)](demo.py)
-- ☑️ 文本[自动换行](#文本自动换行)，支持设置最大行宽
-- ☑️ [导入`.srt`文件](#导入字幕)生成字幕并批量设置格式
+
+| 功能名称 | 支持状态 | 验证版本 |
+|---|---|---|
+| [文本与样式](#添加文本) | ✅ | 8.2.0 |
+| [字体](#添加文本) | ✅ | 9.5.0.4050 |
+| [文本关键帧](#关键帧) | ✅ | — |
+| [文本动画](#添加片段动画) | ✅ | — |
+| 文字描边、背景和阴影 | ✅ | — |
+| 文字气泡和花字[(示例代码)](demo.py) | ✅ | 9.5.0.4050（花字） |
+| [文本自动换行](#文本自动换行) | ✅ | — |
+| [导入 SRT 字幕](#导入字幕) | ✅ | — |
+
+### 模板模式
+
+| 功能名称 | 支持状态 | 验证版本 |
+|---|---|---|
+| [加载明文草稿](#加载模板) | ✅ | 8.2.0 |
+| [根据名称替换素材](#根据名称替换素材) | ✅ | — |
+| [根据片段替换素材](#根据片段替换素材) | ✅ | — |
+| [替换文本内容](#替换文本片段的内容) | ✅ | — |
+| [导入模板轨道](#导入模板草稿中的轨道) | ✅ | — |
+| [提取素材元数据](#提取素材元数据) | ✅ | — |
 
 # 安装
+
 pyCapCut现已支持pip安装（不含demo）
 ```
 pip install pycapcut
 ```
 
 ### 跨平台兼容性
-Linux和MacOS用户也可正常安装和使用，但注意**生成的草稿仍然需要在Windows版CapCut下导出**。
+
+Windows、Linux 和 macOS 均可安装本库，用于生成和编辑草稿。**生成的草稿请在 Windows 版 CapCut 中打开并手动导出视频。**
 
 # 快速上手
+
 例程`demo.py`将创建包含音视频素材和一行文本的CapCut草稿文件，并且添加了音频淡入、视频入场动画、转场效果、关键帧和文本气泡/花字。
 
 这个例程的操作方法如下：
+
 1. 找到CapCut的**草稿文件夹路径**（类似`.../CapCut Drafts`），用其替换代码中的`<你的草稿文件夹>`
-2. 运行`demo.py`
+2. 运行`demo.py`（该例程会覆盖已有的同名 `demo` 草稿，运行前请确认无需保留）
 3. 在CapCut中**找到并打开新创建的`demo`草稿**（可能需要进入再退出某个已有草稿，或重启CapCut以刷新草稿列表），你应该看到类似如下的时间轴：
 
 ![快速上手](readme_assets/快速上手.png)
 
-你可以仔细检查音频片段的音量设置、淡入效果时长等，看看是否符合上述代码的设置
+你可以调整素材、时间和效果设置，再次运行例程生成草稿。需要成片时，在 CapCut 中手动导出视频。
 
 # 用法文档
 
 > ℹ 文档部分推荐从[功能清单](#功能清单)一节中选取感兴趣的功能阅读，而非直接按顺序阅读
 
 ### 模板模式
-> 🧪 本模块刚刚完成迁移，若出现不适配的情况欢迎提出issue
+
+模板必须是可直接读取的明文 `draft_content.json`，加密或其他不可读格式暂不支持。
 
 为了保留部分复杂特性（文本特效、复合片段...），可以加载一个已有的CapCut草稿作为模板，然后将其中内容导入到另一的草稿中，或直接**替换其中部分片段的内容**。
 
 目前提供了**三种替换功能**：
+
 - [根据名称替换素材](#根据名称替换素材)：直接替换素材本身，自然影响所有引用该素材的片段
 - [根据片段替换素材](#根据片段替换素材)：替换某个特定片段的素材，同时重新选取其引用的素材范围
 - [替换文本片段的内容](#替换文本片段的内容)：保留所有文本格式，但替换其内容
@@ -104,16 +137,16 @@ Linux和MacOS用户也可正常安装和使用，但注意**生成的草稿仍�
 > ℹ 若出现模板内容丢失的情况，欢迎反馈
 
 #### 加载模板
+
 推荐使用`DraftFolder`来管理CapCut的草稿文件夹（可以在CapCut的`全局设置`-`草稿位置`中查询），这样能够方便地根据已有模板生成新草稿。
 
 ```python
 import pycapcut as cc
 
 draft_folder = cc.DraftFolder("<CapCut草稿文件夹>")  # 一般形如 ".../CapCut Drafts"
-script = draft_folder.duplicate_as_template("模板草稿", "新草稿")  # 复制"模板草稿"，并命名为"新草稿"，同时打开新草稿供编辑
+script = draft_folder.duplicate_as_template("模板草稿", "新草稿")  # 复制为"新草稿"，返回可编辑的 ScriptFile 对象
 
 # 对返回的ScriptFile对象进行编辑，如替换素材、添加轨道、片段等
-
 script.save()  # 保存你的"新草稿"
 ```
 
@@ -122,9 +155,8 @@ script.save()  # 保存你的"新草稿"
 - 除下述替换功能外，不能在导入的轨道上添加片段、转场、淡入淡出、特效等
 - **仍然可以创建新的轨道，并在其上添加片段等**，就像非模板模式一样
 
-> ℹ 导入轨道的限制也许会在后续版本中逐渐取消
-
 #### 提取素材元数据
+
 对导入的`ScriptFile`对象，可以调用`inspect_material`方法提取部分素材的`resource_id`。
 `DraftFolder`也有相应的方法来提取指定草稿的素材元数据。
 
@@ -156,6 +188,7 @@ script.inspect_material()
 其中的元数据可用于添加相应素材（例如通过`StickerSegment`的`resource_id`参数）
 
 #### 根据名称替换素材
+
 这种方法将替换素材本身，而不对片段进行直接修改。
 
 > ℹ 由于素材有名称（默认是本地文件的名称），这种替换方式的定位比较方便
@@ -171,6 +204,7 @@ script.replace_material_by_name("audio.mp3", new_material)  # 替换名称为"au
 替换新素材后，片段所截取的部分仍是素材前5秒，且音量、淡入淡出、播放速度等仍保持不变。
 
 #### 根据片段替换素材
+
 这种方法将替换某个**特定片段**的素材，同时可以**重新选取其引用的素材范围**并**根据新时长在时间轴上伸缩片段**。
 
 > ℹ 由于片段没有名称，故通常需要**依靠片段的下标来定位**
@@ -190,7 +224,7 @@ script.replace_material_by_seg(
     #source_timerange=None,                # 若不指定，则默认使用整个素材
     source_timerange=trange_seconds(0, duration=10),  # 此处指定截取素材前10秒(注意原片段时长为5秒)
     handle_shrink=ShrinkMode.cut_tail,     # 片段若要缩短，则依靠前移终止点来实现
-handle_extend=ExtendMode.push_tail         # 片段若要延长，则依靠后移终止点来实现，必要时允许后移后续片段
+    handle_extend=ExtendMode.push_tail     # 片段若要延长，则依靠后移终止点来实现，必要时允许后移后续片段
 )
 ```
 
@@ -205,6 +239,7 @@ handle_extend=ExtendMode.push_tail         # 片段若要延长，则依靠后�
 > ℹ 目前已知替换带有组合出入场动画的片段不会自动刷新动画时间
 
 #### 替换文本片段的内容
+
 这种方法将替换某个**特定文本片段**的内容，但保留其所有格式。
 
 此过程同样分为**选取轨道**和**替换内容**两个步骤：其中“选取轨道”可参考[根据片段替换素材](#根据片段替换素材)中的示例。
@@ -221,7 +256,7 @@ script.replace_text(
 
 此功能会字面意义地复制模板草稿中的指定轨道到新草稿中, 适合用于拼接多个模板草稿。
 
-> ℹ **目前仅支持导入音视频/文本轨道**, 支持的范围将来会继续扩展
+> ℹ **目前仅支持导入音视频/文本轨道**
 
 > ⚠️ 本方法会保留各片段及其素材的id, 因而**不支持向同一草稿多次导入同一轨道**
 
@@ -249,7 +284,9 @@ target_script.import_track(
 ### 时间与轨道
 
 #### 时间格式
+
 **CapCut（和本项目）内部均采用微秒为单位保存时间**，但这不便于输入，故我们增加了一种“字符串形式”的时间，大部分时间参数均同时支持这两种形式：
+
 - 微秒形式：用`int`表达，适于计算
 - 字符串形式：用`str`表达，如`"1.5s"`、`"1h3m12s"`等，易于输入
 
@@ -273,7 +310,7 @@ assert 1000000 == SEC == tim("1s") == tim("0.01666667m")
 assert cc.Timerange(0, 60*SEC) == trange("0s", "1m") == trange("0s", "0.5m30s")
 
 # 片段开始后2秒
-seg: cc.VideoSegment
+seg = cc.TextSegment("示例", cc.trange_seconds(0, duration=4))
 assert seg.target_timerange.start + 2*SEC == seg.target_timerange.start + tim("2s")
 
 # 以秒数给出相邻片段的绝对边界
@@ -283,10 +320,12 @@ assert first.end == second.start
 ```
 
 #### 素材截取与整体变速
+
 截取和变速均在`Segment`创建时设置完成，具体是通过`target_timerange`、`source_timerange`和`speed`参数来共同实现的。
 > ℹ 目前暂不支持设置曲线变速
 
 以下以`VideoSegment`为例，`AudioSegment`的用法相同，此二者支持两种构造方式：
+
 1. **便捷构造**：直接传入素材路径字符串，自动构造素材实例
 2. **传统构造**：先创建素材实例，再传入片段构造函数。**若需要设置素材的图像裁剪属性请使用此方式**
 
@@ -318,8 +357,7 @@ print("Video material length: %f s" % (mat.duration / SEC))
 # 不指定source_timerange，则自动从头截取素材等长片段
 seg11 = cc.VideoSegment(video_path, trange_seconds(0, duration=4))              # 自动截取素材的前4秒
 seg2  = cc.VideoSegment(video_path, trange_seconds(0, duration=4), speed=1.25)  # 自动截取素材的前4*1.25=5秒
-seg4  = cc.VideoSegment(video_path, trange_seconds(0, duration=3), speed=3.0)   # 截取前3*3.0=9秒，素材不够长故报错
-
+# seg4 = cc.VideoSegment(video_path, trange_seconds(0, duration=3), speed=3.0)   # 截取前3*3.0=9秒，素材不够长故报错
 # 指定source_timerange，则截取素材的指定片段，自动设置速度
 seg12 = cc.VideoSegment(video_path, trange_seconds(4, duration=1),
                             source_timerange=trange_seconds(0, duration=4))  # 将素材在1s内放完，速度自动设置为4.0
@@ -356,6 +394,7 @@ script.save()
 ```
 
 #### 多轨道操作
+
 目前`ScriptFile.add_track`方法已支持创建多个同类型轨道，并支持自定义其顺序：
 ```python
 script.add_track(cc.TrackType.video,
@@ -374,7 +413,8 @@ script.add_segment(video_segment, "背景")
 ```
 
 ### 视频整体调节
-每个视频片段都可以单独设置裁剪、旋转、翻转、缩放、透明度、亮度等属性，这些设置通过`VideoSegment`构造函数中的`clip_settings`参数传入
+
+每个视频片段都可以单独设置旋转、翻转、缩放、透明度和位移，通过 `VideoSegment` 构造函数的 `clip_settings` 参数传入。素材裁剪通过 `VideoMaterial` 的 `crop_settings` 参数设置。
 > ℹ 关键帧的优先级高于整体调节，故前者会覆盖后者的相应设置
 
 下方的例子将创建一个视频片段，并设置其不透明度为0.5、打开水平翻转：
@@ -390,6 +430,7 @@ video_segment = cc.VideoSegment(video_material,
 更具体的参数说明可参见`ClipSettings`的构造函数。
 
 ### 关键帧
+
 关键帧是吸附在**片段**上的“时刻-数值”对，所以创建关键帧只需要在`add_keyframe`方法中指定**相对片段头部的**时刻、数值以及控制的属性即可。
 > ℹ 目前不支持设置特效或滤镜参数的关键帧
 
@@ -425,7 +466,19 @@ audio_segment: cc.AudioSegment
 audio_segment.add_keyframe("0s", 0.6) # 片段开始时的音量为60%
 ```
 
+### 音频淡入淡出
+
+对音频片段或带音轨的视频片段调用 `add_fade(in_duration, out_duration)`，分别设置音频淡入、淡出时长。时长可使用时间字符串或微秒数，每个片段只能设置一次。
+
+```python
+audio_segment.add_fade("1s", "0.5s")
+video_segment.add_fade("0.5s", "1s")
+```
+
+通过片段构造函数的 `volume` 参数设置音量，`1.0` 表示原始音量；动态音量变化可使用[关键帧](#关键帧)。
+
 ### 蒙版
+
 蒙版的添加非常简单：调用`VideoSegment`的`add_mask`方法即可：
 ```python
 from pycapcut import MaskType
@@ -436,6 +489,7 @@ video_segment1.add_mask(MaskType.线性, center_x=100, rotation=45)
 video_segment2.add_mask(MaskType.圆形, size=0.5)
 ```
 其中：
+
 - `MaskType`保存了CapCut自带的蒙版类型
 - `center_x`和`center_y`参数表示蒙版中心点的坐标，与CapCut中意义一致
 - `rotation`、`feather`、`round_corner`分别表示旋转、羽化、圆角参数，与CapCut中意义一致
@@ -444,12 +498,16 @@ video_segment2.add_mask(MaskType.圆形, size=0.5)
 更具体的参数说明请参见`add_mask`方法的注释。
 
 ### 特效、动画和滤镜
+
 #### 特效类型
+
 目前支持的**特效**类型由以下枚举类定义：
-- 音频：`AudioSceneEffectType`（场景音）、`ToneEffectType`（音色，收录 11 项传统参数类候选）
+
+- 音频：`AudioSceneEffectType`（场景音）、`ToneEffectType`（音色）
 - 视频：`VideoSceneEffectType`（画面特效）、`VideoCharacterEffectType`（人物特效）
 
 目前支持的**动画**类型由以下枚举类定义：
+
 - 视频：`IntroType`（入场）, `OutroType`（出场）, `GroupAnimationType`（组合动画）
 - 文本：`TextIntro`（入场）、`TextOutro`（出场）, `TextLoopAnim`（循环动画）
 
@@ -462,12 +520,15 @@ video_segment2.add_mask(MaskType.圆形, size=0.5)
 你也可以使用`from_name`方法来获取特定的成员，其忽略大小写、空格和下划线，例如：
 
 ```python
+from pycapcut import VideoSceneEffectType
+
 assert VideoSceneEffectType.from_name("__全息 扫描__") == VideoSceneEffectType.全息扫描
 ```
 
 > ⚠️ 并非所有在枚举类中的特效均可用，**请确认能在CapCut窗口中找到该特效再使用**
 
 #### 添加片段特效
+
 添加特效使用的方法是`segment.add_effect()`，它接受特效类型和一个参数数组，参数数组的顺序**与特效类型注释中的参数顺序一致**，但**不一定与CapCut内的参数顺序一致**。
 
 下方的例子为视频片段添加一个`全息扫描`特效，并且指定其`氛围`参数为（CapCut中的）100，其余参数默认：
@@ -477,7 +538,7 @@ from pycapcut import VideoSceneEffectType
 video_segment.add_effect(VideoSceneEffectType.全息扫描,
                          [None, None, 100.0]) # 不设置前两个参数, 第三个参数（氛围）为100，其余参数也不设置
 ```
-音频片段的特效添加方法与视频片段相似。已验证的“花栗鼠”音色可这样添加，两个参数依次为音调和音色，范围均为 0～100，默认均为 50：
+音频片段的特效添加方法与视频片段相似。“花栗鼠”音色可这样添加，两个参数依次为音调和音色，范围均为 0～100，默认均为 50：
 
 ```python
 from pycapcut import ToneEffectType
@@ -485,22 +546,23 @@ from pycapcut import ToneEffectType
 audio_segment.add_effect(ToneEffectType.花栗鼠, [50, 42])
 ```
 
-同一音频片段只能添加一个音色；音色与场景音可以同时添加。`ToneEffectType` 当前收录 CapCut 缓存中 11 项有滑块参数、未标记 `is_voice_conversion` 的传统音色。
+同一音频片段只能添加一个音色；音色与场景音可以同时添加。`ToneEffectType` 提供 11 种通过参数调节的音色，暂不支持需要 AI 处理的语音转换效果。部分资源需要 CapCut 会员，具体以应用内提示为准。
 
 #### 添加片段滤镜
+
 滤镜的添加方法与特效类似，其使用的是`VideoSegment.add_filter()`方法。
 与特效不同的是，滤镜只支持一个“滤镜强度”参数。
 
 ```python
-from pyJianYingDraft import FilterType
+from pycapcut import FilterType
 
-video_segment1.add_filter(FilterType.原生肤, 10)  # 设置"原生肤"强度为10
-video_segment2.add_filter(FilterType.冰雪世界, 50)  # 设置"冰雪世界"强度为50
+video_segment1.add_filter(FilterType.冷蓝, 10)  # 设置"冷蓝"强度为10
+video_segment2.add_filter(FilterType.冷蓝, 50)  # 设置"冷蓝"强度为50
 ```
 
 #### 设置片段混合模式
 
-`VideoSegment.set_mix_mode()`用于设置叠放视频片段的混合模式。`MixModeType`收录了在 CapCut 9.5.0.4050 中的十种模式：正片叠底、颜色减淡、颜色加深、线性加深、柔光、强光、滤色、叠加、变亮、变暗。下层片段需从主轨道的 0 秒开始，上层片段应在更高的轨道上：
+`VideoSegment.set_mix_mode()`用于设置叠放视频片段的混合模式。`MixModeType` 提供十种模式：正片叠底、颜色减淡、颜色加深、线性加深、柔光、强光、滤色、叠加、变亮、变暗。下层片段需从主轨道的 0 秒开始，上层片段应在更高的轨道上：
 
 ```python
 import pycapcut as cc
@@ -519,7 +581,7 @@ script.add_segment(foreground, "前景")
 
 #### 添加色度抠图
 
-对视频片段调用 `add_chroma()`。颜色使用 `#RRGGBBAA`；四个数值按 CapCut 界面上的 0–100 填写，依次对应强度、阴影、边缘羽化、边缘清除。每个片段只能添加一次，并应在 `script.add_segment()` 之前调用。
+对视频片段调用 `add_chroma()`。颜色使用 `#RRGGBBAA`；四个数值按 CapCut 界面上的 0–100 填写，依次对应强度、阴影、边缘羽化、边缘清除。默认值依次为 20、0、0、0。每个片段只能添加一次，并应在 `script.add_segment()` 之前调用。部分控件需要 CapCut 会员，具体以应用内提示为准。
 
 ```python
 import pycapcut as cc
@@ -534,12 +596,13 @@ script.add_segment(foreground, "前景")
 ```
 
 #### 独立轨道上的特效和滤镜
+
 除了为视频片段添加特效和滤镜外，你还可以创建独立的特效轨道和滤镜轨道，并在其上添加特效和滤镜片段。
 
 首先使用`ScriptFile.add_track()`方法创建特效轨道或滤镜轨道。若需要指定顺序请参考[多轨道操作](#多轨道操作)
 ```python
-script.add_track(draft.TrackType.effect, "my_effect")  # 创建名为"my_effect"的特效轨道
-script.add_track(draft.TrackType.filter, "my_filter")  # 创建名为"my_filter"的滤镜轨道
+script.add_track(cc.TrackType.effect, "my_effect")  # 创建名为"my_effect"的特效轨道
+script.add_track(cc.TrackType.filter, "my_filter")  # 创建名为"my_filter"的滤镜轨道
 ```
 
 接下来便可使用`add_effect`和`add_filter`方法向这些轨道添加片段：
@@ -551,7 +614,7 @@ script.add_effect(VideoSceneEffectType.胶片闪切, trange_seconds(0, duration=
                   track_name="my_effect",  # 当特效轨道只有一条时可省略
                   params=[50, None, 80])  # 设置速度为50，保持强度默认(100)，设置纹理为80
 
-# 在滤镜轨道上添加一个"哈苏蓝"滤镜，持续整个视频，强度为70
+# 在滤镜轨道上添加一个"冷蓝"滤镜，持续整个视频，强度为70
 # script.duration 是内部微秒值，直接使用 trange
 script.add_filter(FilterType.冷蓝, trange(0, script.duration),
                   track_name="my_filter",  # 当滤镜轨道只有一条时可省略
@@ -559,13 +622,14 @@ script.add_filter(FilterType.冷蓝, trange(0, script.duration),
 ```
 
 #### 添加片段动画
-添加动画使用的方法是`segment.add_animation()`。不传时长时，文本入场和出场动画使用各自效果元数据中的默认时长；也可通过第二个参数指定时长。循环动画自动填满片段中其余无动画的部分。若需要添加多个动画，可对同一个片段调用多次该方法。
+
+添加动画使用的方法是`segment.add_animation()`。不传时长时，文本入场和出场动画使用各自效果的默认时长；也可通过第二个参数指定时长。循环动画自动填满片段中其余无动画的部分。若需要添加多个动画，可对同一个片段调用多次该方法。
 
 > ℹ 为**文本片段**同时设置循环动画和入出场动画时, 请**先添加出入场动画再添加循环动画**
 
 以下是为一个文本片段添加三种动画的例子：
 ```python
-from pyJianYingDraft import TextIntro, TextOutro, TextLoopAnim
+from pycapcut import TextIntro, TextOutro, TextLoopAnim
 
 text_seg.add_animation(TextIntro.复古打字机).add_animation(TextOutro.弹簧)
 text_seg.add_animation(TextLoopAnim.色差故障)  # 注意：循环动画必须在出入场动画之后添加
@@ -573,7 +637,9 @@ text_seg.add_animation(TextLoopAnim.色差故障)  # 注意：循环动画必须
 
 
 ### 文本及字幕
+
 #### 添加文本
+
 添加文本与添加视频/音频片段类似，只需创建`TextSegment`对象并利用`add_segment`添加到`ScriptFile`中即可。
 其**字体**、**文字样式**及**图像调节**设置可分别通过`font`, `style`和`clip_settings`参数设置。
 
@@ -584,7 +650,7 @@ from pycapcut import FontType, TextStyle, ClipSettings, trange_seconds
 
 # 带下划线、位置及大小类似字幕的浅蓝色文本
 seg1 = cc.TextSegment("Subtitle", trange_seconds(0, duration=10),
-                          font=FontType.文轩体,
+                          font=FontType.思源粗宋,
                           style=TextStyle(size=5.0, color=(0.7, 0.7, 1.0), underline=True, align=1),
                           clip_settings=ClipSettings(transform_y=-0.8))
 ```
@@ -592,19 +658,21 @@ seg1 = cc.TextSegment("Subtitle", trange_seconds(0, duration=10),
 更具体的参数说明可参见`TextStyle`和`ClipSettings`的构造函数。
 
 #### 文本自动换行
+
 文本片段支持自动换行功能，可以通过`TextStyle`的`auto_wrapping`和`max_line_width`参数来控制：
 
 ```python
 # 启用自动换行，设置最大行宽为屏幕宽度的70%
 seg2 = cc.TextSegment("这是一段很长的文本内容，当超过设定的最大行宽时会自动换行显示",
                           trange_seconds(0, duration=10),
-                          font=FontType.文轩体,
+                          font=FontType.思源粗宋,
                           style=TextStyle(size=5.0,
                                           auto_wrapping=True,      # 启用自动换行
                                           max_line_width=0.7))     # 最大行宽占屏幕70%
 ```
 
 #### 导入字幕
+
 > ℹ 目前只支持导入**SRT格式**的字幕文件
 
 导入字幕本质上是根据每条字幕的时间戳及内容创建一系列文本，并添加到轨道中。这一过程通过`ScriptFile.import_srt`来实现。
@@ -615,20 +683,27 @@ seg2 = cc.TextSegment("这是一段很长的文本内容，当超过设定的最
 import pycapcut as cc
 
 # 假定已有草稿文件script（参见“快速上手”）
-
 # 将字幕导入到名为"subtitle"的轨道中，若轨道不存在将自动创建
 # 不指定style和clip_settings，则默认模拟CapCut导入字幕时的样式
 script.import_srt("subtitle.srt", track_name="subtitle", time_offset="1.5s")  # 字幕整体后移1.5秒
+```
 
+以下示例是不同的用法，请按需选用，避免在同一轨道重复导入重叠字幕。
+
+```python
 # 可以利用`text_style`和`clip_settings`参数对字幕的样式进行调整, 上述参数的意义与`TextSegment()`中的相同
 script.import_srt("subtitle.srt", track_name="subtitle",
-                  text_style=cc.TextStyle(size=10.0, color=(1.0, 0.0, 0.0))
+                  text_style=cc.TextStyle(size=10.0, color=(1.0, 0.0, 0.0)),
                   clip_settings=cc.ClipSettings(transform_y=0.8))  # 将字幕放置在屏幕上方
+```
 
+```python
 # 如果需要更复杂的样式或希望为字幕应用动画，可以为`style_reference`参数传入一个`TextSegment`对象作为样式参考（忽略其文本和片段长度设置）
 # 注意动画时间不会根据字幕片段长度进行调节，故当字幕片段过短时可能出现奇怪的效果
 script.import_srt("subtitle.srt", track_name="subtitle", style_reference=seg1)  # 以上一节“添加文本”中的文本作为参考
+```
 
+```python
 # 默认不会采用`style_reference`片段中的`clip_settings`设置，如果需要的话请显式传入`clip_settings=None`
 script.import_srt("subtitle.srt", track_name="subtitle", style_reference=seg1, clip_settings=None)  # 相当于clip_settings=seg1.clip_settings
 ```
