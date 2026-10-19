@@ -2,7 +2,7 @@
 
 ### 轻量、灵活、易上手的 Python CapCut 草稿生成与编辑工具
 
-[English Version](english_readme.md)
+[English Version](english_readme.md) | [한국어 버전](korean_readme.md)
 
 > 本项目与 [PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft) 同源，面向 CapCut 草稿。
 

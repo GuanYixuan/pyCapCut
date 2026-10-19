@@ -3,7 +3,7 @@
 
 ### A lightweight, flexible Python tool for generating and editing CapCut drafts
 
-[中文版本](README.md)
+[中文版本](README.md) | [한국어 버전](korean_readme.md)
 
 > This project shares its origins with [PyJianYingDraft](https://github.com/GuanYixuan/pyJianYingDraft) and targets CapCut drafts.
 
